@@ -96,6 +96,12 @@
   background: #f0ece6;
 }
 
+.mockupContent {
+  width: 450px;
+  zoom: 0.5866;
+  margin: 0 auto;
+}
+
 @media (max-width: 900px) {
   .heroInner {
     flex-direction: column;
@@ -128,6 +134,10 @@
     width: 240px;
     height: 490px;
   }
+  
+  .mockupContent {
+    zoom: 0.497;
+  }
 }
 
 @media (max-width: 480px) {
@@ -136,6 +146,10 @@
     height: 430px;
     border-radius: 32px;
     padding: 10px;
+  }
+
+  .mockupContent {
+    zoom: 0.422;
   }
 
   .phoneScreen {

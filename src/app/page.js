@@ -103,7 +103,7 @@ export default function Home() {
               <div className={styles.phoneNotch}></div>
               <div className={styles.phoneScreen}>
                 <div ref={heroMockupRef} className="hide-scrollbar" style={{ width: '100%', height: '100%', overflowY: 'auto', overflowX: 'hidden' }}>
-                  <div style={{ width: '450px', zoom: 0.5866, margin: '0 auto' }}>
+                  <div className={styles.mockupContent}>
                     <BordeauxTemplate 
                       autoPlaySimulation={true} 
                       onEnvelopeDismissed={handleSimulationScroll}
