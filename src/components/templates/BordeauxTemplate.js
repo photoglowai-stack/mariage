@@ -392,8 +392,8 @@ export default function BordeauxTemplate({ data, editMode = false, autoPlaySimul
               <div className={styles.dressCodeContainer} style={{ textAlign: 'center', margin: '4rem 0', padding: '0 2rem' }}>
                 <h2 className={styles.dressCodeTitle} style={{ fontFamily: 'var(--font-heading)', fontSize: '2rem', color: 'var(--color-primary)', marginBottom: '1.5rem' }}>Dress Code</h2>
                 <div style={{ position: 'relative', width: '100%', maxWidth: '400px', margin: '0 auto', borderRadius: '16px', overflow: 'hidden', boxShadow: '0 20px 40px rgba(0,0,0,0.15)' }}>
-                  <img src={data.dressCode?.image || "/images/dress_code_floral.png"} alt="Dress Code Inspiration" style={{ width: '100%', height: 'auto', display: 'block' }} />
-                  {data.dressCode?.text && (
+                  <img src={t.dressCode?.image || "/images/dress_code_floral.png"} alt="Dress Code Inspiration" style={{ width: '100%', height: 'auto', display: 'block' }} />
+                  {t.dressCode?.text && (
                     <div style={{
                       position: 'absolute',
                       bottom: 0,
@@ -413,7 +413,7 @@ export default function BordeauxTemplate({ data, editMode = false, autoPlaySimul
                         textShadow: '0 4px 12px rgba(0,0,0,0.5)',
                         lineHeight: 1.1
                       }}>
-                        {data.dressCode.text}
+                        {t.dressCode.text}
                       </p>
                     </div>
                   )}
