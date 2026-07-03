@@ -1,0 +1,195 @@
+.page {
+  padding-bottom: 2rem;
+}
+
+/* Hero */
+.hero {
+  padding: 6rem 0;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.015);
+}
+
+.hero .label {
+  display: block;
+  margin-bottom: 1.5rem;
+}
+
+.hero h1 {
+  margin-bottom: 1.5rem;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hero p {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Story */
+.storySection {
+  padding: 7rem 0;
+}
+
+.storyGrid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+@media (max-width: 800px) {
+  .storyGrid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+}
+
+.storyImageWrapper {
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+}
+
+.storyImage {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform 0.6s ease;
+}
+
+.storyImageWrapper:hover .storyImage {
+  transform: scale(1.03);
+}
+
+/* Values */
+.valuesSection {
+  padding: 7rem 0;
+  background: rgba(0, 0, 0, 0.015);
+}
+
+.valuesGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+}
+
+@media (max-width: 600px) {
+  .valuesGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.valueCard {
+  padding: 2.5rem;
+  background: white;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.valueCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.06);
+}
+
+.valueIcon {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+
+/* Difference */
+.differenceSection {
+  padding: 7rem 0;
+}
+
+.differenceInner {
+  display: grid;
+  grid-template-columns: 1.3fr 0.7fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+@media (max-width: 800px) {
+  .differenceInner {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+}
+
+.differenceStats {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.stat {
+  text-align: center;
+  padding: 2rem;
+  background: white;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  transition: transform 0.4s ease;
+}
+
+.stat:hover {
+  transform: translateY(-3px);
+}
+
+.statNum {
+  font-family: var(--font-heading);
+  font-size: 3rem;
+  line-height: 1;
+  color: var(--color-accent);
+  display: block;
+}
+
+.statLabel {
+  font-size: 0.85rem;
+  color: var(--color-muted);
+  margin-top: 0.5rem;
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Commitment */
+.commitmentSection {
+  padding: 7rem 0;
+  background: rgba(0, 0, 0, 0.015);
+}
+
+.commitGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+@media (max-width: 700px) {
+  .commitGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.commitCard {
+  padding: 2.5rem;
+  background: white;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  text-align: center;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.commitCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.06);
+}
+
+/* CTA */
+.ctaSection {
+  padding: 5rem 2rem;
+  background: var(--color-foreground);
+  color: var(--color-background);
+  border-radius: var(--radius-xl);
+  margin: 5rem 1.5rem 0;
+}

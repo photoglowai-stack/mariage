@@ -1,0 +1,150 @@
+.page {
+  padding: 4rem 0 6rem;
+  background-color: rgba(250, 249, 246, 0.5); /* slight off-white */
+  min-height: 100vh;
+}
+
+.checkoutWrapper {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 4rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+@media (max-width: 850px) {
+  .checkoutWrapper {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+  
+  .orderSummary {
+    grid-row: 1; /* move summary to top on mobile */
+  }
+}
+
+.formSection {
+  background: white;
+  padding: 2rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  margin-bottom: 2rem;
+}
+
+.inputGroup {
+  margin-bottom: 1.2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.inputGroup label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin-bottom: 0.4rem;
+  color: var(--color-foreground);
+}
+
+.input {
+  padding: 0.8rem 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.input:focus {
+  border-color: var(--color-accent);
+}
+
+.inputRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.payButton {
+  width: 100%;
+  padding: 1.2rem;
+  font-size: 1.1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.payButton:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Order Summary */
+.orderSummary {
+  background: white;
+  padding: 2.5rem;
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--color-border);
+  height: fit-content;
+  position: sticky;
+  top: 100px;
+}
+
+.summaryItem {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.summaryImage {
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  width: 80px;
+  height: 100px;
+  flex-shrink: 0;
+}
+
+.summaryDetails {
+  flex: 1;
+}
+
+.summaryPrice {
+  font-weight: 700;
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+}
+
+.divider {
+  height: 1px;
+  background: rgba(128, 128, 128, 0.15);
+  margin: 1.5rem 0;
+}
+
+.totalsRow {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+  font-size: 0.95rem;
+  color: var(--color-muted);
+}
+
+.totalFinal {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--color-foreground);
+  margin-bottom: 0;
+}
+
+.guarantee {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 2rem;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.02);
+  border-radius: 8px;
+}
+
+.guaranteeIcon {
+  font-size: 1.5rem;
+}
