@@ -424,7 +424,7 @@ export default function Home() {
           boxShadow: '0 8px 30px rgba(107, 54, 62, 0.35), 0 4px 10px rgba(0,0,0,0.1)',
           textDecoration: 'none', fontWeight: 600, fontSize: '1rem',
           fontFamily: 'var(--font-body)', border: '1px solid rgba(255,255,255,0.1)',
-          whiteSpace: 'nowrap'
+          whiteSpace: 'nowrap', width: 'max-content'
         }}>
           Start your invitation →
         </Link>

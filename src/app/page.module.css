@@ -132,7 +132,7 @@
 
   .phoneFrame {
     width: 240px;
-    height: 490px;
+    height: 425px;
   }
   
   .mockupContent {
@@ -143,7 +143,7 @@
 @media (max-width: 480px) {
   .phoneFrame {
     width: 210px;
-    height: 430px;
+    height: 360px;
     border-radius: 32px;
     padding: 10px;
   }
