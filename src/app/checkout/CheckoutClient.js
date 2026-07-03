@@ -155,6 +155,10 @@ export default function CheckoutClient() {
         @media (max-width: 600px) {
           .mobile-hide { display: none !important; }
           .checkout-bottom-bar { padding: 0 1.5rem 1rem !important; }
+          .checkout-box { padding: 2rem 1.5rem !important; }
+          .checkout-grid { grid-template-columns: 1fr !important; }
+          .checkout-container { padding-bottom: 90px !important; }
+          input { width: 100% !important; box-sizing: border-box; }
         }
       `}</style>
       
@@ -181,7 +185,7 @@ export default function CheckoutClient() {
         </div>
       </div>
 
-      <div style={{ maxWidth: '600px', margin: '0 auto', padding: '3rem 1.5rem' }}>
+      <div className="checkout-container" style={{ maxWidth: '600px', margin: '0 auto', padding: '3rem 1.5rem 120px' }}>
         
         {/* STEP 1: PACKAGE SELECTION */}
         {step === 1 && (
@@ -241,12 +245,12 @@ export default function CheckoutClient() {
 
         {/* STEP 2: DETAILS */}
         {step === 2 && (
-          <div style={{ backgroundColor: '#fff', borderRadius: '24px', padding: '3rem 2.5rem', boxShadow: '0 4px 24px rgba(0,0,0,0.02)', border: '1px solid rgba(0,0,0,0.04)' }}>
+          <div className="checkout-box" style={{ backgroundColor: '#fff', borderRadius: '24px', padding: '3rem 2.5rem', boxShadow: '0 4px 24px rgba(0,0,0,0.02)', border: '1px solid rgba(0,0,0,0.04)' }}>
             <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
               <h1 style={{ fontSize: '1.8rem', fontWeight: 400, fontFamily: 'var(--font-heading)', color: '#6b363e' }}>Your details</h1>
               <p style={{ color: '#888', fontSize: '0.95rem', marginTop: '0.5rem' }}>Just the essentials to start</p>
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
+            <div className="checkout-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
               <input type="text" placeholder="Your name" value={account.name} onChange={e => setAccount({...account, name: e.target.value})} style={{ padding: '1rem', borderRadius: '12px', border: '1px solid #e0dcd7', backgroundColor: '#faf8f5', fontSize: '0.95rem', outline: 'none', fontFamily: 'inherit' }} />
               <input type="text" placeholder="Your partner's name" value={account.partnerName} onChange={e => setAccount({...account, partnerName: e.target.value})} style={{ padding: '1rem', borderRadius: '12px', border: '1px solid #e0dcd7', backgroundColor: '#faf8f5', fontSize: '0.95rem', outline: 'none', fontFamily: 'inherit' }} />
             </div>
@@ -259,7 +263,7 @@ export default function CheckoutClient() {
         {/* STEP 3: SUMMARY */}
         {step === 3 && (
           <div>
-            <div style={{ backgroundColor: '#fff', borderRadius: '24px', padding: '3rem 2.5rem', boxShadow: '0 4px 24px rgba(0,0,0,0.02)', border: '1px solid rgba(0,0,0,0.04)' }}>
+            <div className="checkout-box" style={{ backgroundColor: '#fff', borderRadius: '24px', padding: '3rem 2.5rem', boxShadow: '0 4px 24px rgba(0,0,0,0.02)', border: '1px solid rgba(0,0,0,0.04)' }}>
               <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
                 <div style={{ fontSize: '0.75rem', letterSpacing: '2px', color: '#888', textTransform: 'uppercase', marginBottom: '0.5rem' }}>YOUR INVITATION</div>
                 <h2 style={{ fontSize: '2.5rem', fontFamily: 'var(--font-heading)', color: '#6b363e', fontStyle: 'italic' }}>{selectedPackage.name}</h2>
