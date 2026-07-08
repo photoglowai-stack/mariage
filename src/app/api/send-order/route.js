@@ -23,11 +23,17 @@ export async function POST(request) {
       specialRequests,
       inspirationLinks,
       sectionsWanted,
+      menuDetails,
+      attachments,
     } = data;
 
     const sectionsText = sectionsWanted && sectionsWanted.length > 0 
       ? sectionsWanted.join(', ') 
       : 'Non spécifié';
+
+    const attachmentSummary = attachments && attachments.length > 0
+      ? attachments.map(a => `<li>📄 ${a.filename}</li>`).join('')
+      : 'Aucun fichier joint';
 
     const emailBody = `
 <!DOCTYPE html>
@@ -49,6 +55,7 @@ export async function POST(request) {
     .value { font-weight: 600; color: #1a1a1a; font-size: 0.9rem; text-align: right; max-width: 60%; }
     .note-box { background: #faf8f5; border-radius: 12px; padding: 1.2rem; margin-top: 0.5rem; font-size: 0.9rem; color: #555; line-height: 1.6; white-space: pre-wrap; }
     .footer { text-align: center; padding: 1.5rem; color: #888; font-size: 0.8rem; border-top: 1px solid #f0ede9; }
+    ul { padding-left: 1.2rem; margin: 0.5rem 0; font-size: 0.9rem; color: #555; }
   </style>
 </head>
 <body>
@@ -91,6 +98,18 @@ export async function POST(request) {
           <div class="note-box">${sectionsText}</div>
         </div>
 
+        ${menuDetails ? `
+        <div class="section">
+          <div class="section-title">🍽️ Détails du Menu / Réception</div>
+          <div class="note-box">${menuDetails}</div>
+        </div>
+        ` : ''}
+
+        <div class="section">
+          <div class="section-title">📁 Fichiers joints</div>
+          <ul>${attachmentSummary}</ul>
+        </div>
+
         ${inspirationLinks ? `
         <div class="section">
           <div class="section-title">🔗 Liens d'inspiration</div>
@@ -100,7 +119,7 @@ export async function POST(request) {
 
         ${specialRequests ? `
         <div class="section">
-          <div class="section-title">💬 Demandes spéciales</div>
+          <div class="section-title">💬 Demandes spéciales / Détails à ajouter</div>
           <div class="note-box">${specialRequests}</div>
         </div>
         ` : ''}
@@ -115,10 +134,6 @@ export async function POST(request) {
 </html>
     `.trim();
 
-    // Send email using mailto link fallback — or via a service
-    // For production, use Resend, SendGrid, or similar
-    // For now, we'll use the Web Fetch API to send via an email service
-    
     // Try sending via Resend if API key is available
     const resendKey = process.env.RESEND_API_KEY;
     
@@ -135,6 +150,7 @@ export async function POST(request) {
           subject: `nouvelle commande — ${packageName} — ${name} & ${partnerName}`,
           html: emailBody,
           reply_to: email,
+          attachments: attachments || [],
         }),
       });
 
@@ -148,14 +164,10 @@ export async function POST(request) {
     }
     
     // Fallback: use built-in NodeMailer-like approach via SMTP
-    // For now, store the order and notify via a simple method
-    // We'll send a notification email using a free service
-    
-    // Use EmailJS-like approach via fetch
     const formData = new URLSearchParams();
     formData.append('to', 'contact.ourdaystudio@gmail.com');
     formData.append('subject', `nouvelle commande — ${packageName} — ${name} & ${partnerName}`);
-    formData.append('body', `Nouvelle commande ${packageName} (${price}$)\n\nClient: ${name} & ${partnerName}\nEmail: ${email}\nTéléphone: ${phone || 'N/A'}\n\nDate: ${weddingDate || 'N/A'}\nLieu: ${weddingVenue || 'N/A'}, ${weddingCity || 'N/A'}\nInvités: ${guestCount || 'N/A'}\nLangues: ${languages || 'N/A'}\n\nThème: ${selectedTheme || 'N/A'}\nEnveloppe: ${envelopeChoice || 'N/A'}\nVidéo Hero: ${heroVideoChoice || 'N/A'}\nCouleurs: ${colorPreferences || 'N/A'}\n\nSections: ${sectionsText}\n\nInspiration: ${inspirationLinks || 'N/A'}\nDemandes spéciales: ${specialRequests || 'N/A'}`);
+    formData.append('body', `Nouvelle commande ${packageName} (${price}$)\n\nClient: ${name} & ${partnerName}\nEmail: ${email}\nTéléphone: ${phone || 'N/A'}\n\nDate: ${weddingDate || 'N/A'}\nLieu: ${weddingVenue || 'N/A'}, ${weddingCity || 'N/A'}\nInvités: ${guestCount || 'N/A'}\nLangues: ${languages || 'N/A'}\n\nThème: ${selectedTheme || 'N/A'}\nEnveloppe: ${envelopeChoice || 'N/A'}\nVidéo Hero: ${heroVideoChoice || 'N/A'}\nCouleurs: ${colorPreferences || 'N/A'}\n\nSections: ${sectionsText}\n\nMenu: ${menuDetails || 'N/A'}\nFichiers: ${(attachments || []).map(a => a.filename).join(', ') || 'Aucun'}\n\nInspiration: ${inspirationLinks || 'N/A'}\nDemandes spéciales: ${specialRequests || 'N/A'}`);
 
     // Store order data as JSON for admin review
     console.log('=== NEW ORDER RECEIVED ===');

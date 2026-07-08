@@ -26,7 +26,8 @@ const packages = [
       'Choose 1 template from over 15 options',
       'Your colors and info applied',
       'RSVP + private dashboard',
-      '2 languages included',
+      'All languages supported',
+      'Unlimited guests included',
       '2 design revision rounds'
     ]
   },
@@ -41,8 +42,10 @@ const packages = [
       'Full invitation personalization',
       'Custom icons, typography & illustrations',
       'Includes Video, Music & AI Images',
-      'Unlimited blocks & 4 revision rounds',
-      'Direct contact with your designer'
+      'Unlimited blocks & revisions',
+      'Direct contact with your designer',
+      'All languages supported',
+      'Unlimited guests included'
     ]
   },
   { 
@@ -56,39 +59,41 @@ const packages = [
       'Editorial art direction',
       'Includes Video, Music & AI Images',
       'Personal concierge & priority support',
+      'All languages supported',
+      'Unlimited guests included',
       'Everything in Premium'
     ]
   }
 ];
 
 const ENVELOPE_OPTIONS = [
-  { id: 'env_bordeaux', name: 'Bordeaux Envelope' },
-  { id: 'env_seaview', name: 'Sea View Envelope' },
-  { id: 'env_floral', name: 'Floral Envelope' },
-  { id: 'env_luxury', name: 'Luxury Envelope' },
-  { id: 'env_royal', name: 'Royal Envelope' },
-  { id: 'env_horizon_bordeaux', name: 'Bordeaux Horizon' },
-  { id: 'env_royal_doves', name: 'Royal Doves' },
-  { id: 'env_imperial_light', name: 'Imperial Light' },
-  { id: 'env_golden_palace', name: 'Golden Palace' },
-  { id: 'env_oriental_palace', name: 'Oriental Palace' },
-  { id: 'env_celestial_veil', name: 'Celestial Veil' },
-  { id: 'env_ivory_veil', name: 'Ivory Veil' },
-  { id: 'env_rose_veil', name: 'Rosé Veil' },
-  { id: 'env_rose_bow', name: 'Rose Bow' },
-  { id: 'env_majestic', name: 'Majestic' },
-  { id: 'env_custom', name: "I'll provide my own" },
+  { id: 'env_bordeaux', name: 'Bordeaux Envelope', url: 'https://customer-u86xbpugorqyu327.cloudflarestream.com/dd56b19a36d2302d980bcafece0a9b05/manifest/video.m3u8', color: '#4a1523' },
+  { id: 'env_seaview', name: 'Sea View Envelope', url: 'https://kdcyugwruypwrmtllswt.supabase.co/storage/v1/object/public/invitation-assets/98032531-8029-42fd-8ba2-3f50d3ab7f3a/opening-animation-1777314873141.mp4', color: '#d4c5b9' },
+  { id: 'env_floral', name: 'Floral Envelope', url: 'https://kdcyugwruypwrmtllswt.supabase.co/storage/v1/object/public/invitation-assets/98032531-8029-42fd-8ba2-3f50d3ab7f3a/opening-animation-1777312876430.mp4', color: '#f5e3d7' },
+  { id: 'env_luxury', name: 'Luxury Envelope', url: 'https://kdcyugwruypwrmtllswt.supabase.co/storage/v1/object/public/invitation-assets/98032531-8029-42fd-8ba2-3f50d3ab7f3a/opening-animation-1774273219231.mp4', color: '#9c8160' },
+  { id: 'env_royal', name: 'Royal Envelope', url: 'https://kdcyugwruypwrmtllswt.supabase.co/storage/v1/object/public/invitation-assets/98032531-8029-42fd-8ba2-3f50d3ab7f3a/opening-animation-1777287974328.mp4', color: '#33403a' },
+  { id: 'env_horizon_bordeaux', name: 'Bordeaux Horizon', url: '/videos/horizon-bordeaux.mp4', color: '#6b363e' },
+  { id: 'env_royal_doves', name: 'Royal Doves', url: '/videos/royal-doves.mp4', color: '#e5dcd3' },
+  { id: 'env_imperial_light', name: 'Imperial Light', url: '/videos/imperial-light.mp4', color: '#f3e5d8' },
+  { id: 'env_golden_palace', name: 'Golden Palace', url: '/videos/golden-palace.mp4', color: '#d4af37' },
+  { id: 'env_oriental_palace', name: 'Oriental Palace', url: '/videos/oriental-palace.mp4', color: '#c7b299' },
+  { id: 'env_celestial_veil', name: 'Celestial Veil', url: '/videos/celestial-veil.mp4', color: '#e0e5ec' },
+  { id: 'env_ivory_veil', name: 'Ivory Veil', url: '/videos/ivory-veil.mp4', color: '#f8f5f0' },
+  { id: 'env_rose_veil', name: 'Rosé Veil', url: '/videos/rose-veil.mp4', color: '#f4e1e1' },
+  { id: 'env_rose_bow', name: 'Rose Bow', url: 'https://maldives-demo.thedigitalyes.com/__l5e/assets-v1/ca66d869-63f5-40cc-8421-1b0df31922c2/rs-bow-v2.mp4', color: '#f3d9d7' },
+  { id: 'env_majestic', name: 'Majestic', url: 'https://majestic-template.thedigitalyes.com/assets/intro-video-Dhn3t98e.mp4', color: '#7a5e42' },
+  { id: 'env_custom', name: "I'll provide my own", color: '#888' },
 ];
 
 const HERO_VIDEO_OPTIONS = [
-  { id: 'hero_couple', name: 'Kissing Couple' },
-  { id: 'hero_seaview', name: 'Sea View' },
-  { id: 'hero_palm', name: 'Palm Zoom' },
-  { id: 'hero_car', name: 'Just Married Car' },
-  { id: 'hero_castle', name: 'Castle' },
-  { id: 'hero_royal', name: 'Royal Heritage' },
-  { id: 'hero_sea_anim', name: 'Sea Animation' },
-  { id: 'hero_sea_balcony', name: 'Seaview Balcony' },
+  { id: 'hero_couple', name: 'Kissing Couple', url: 'https://www.wooowinvites.com/assets/kissing-couple-theme-m4dGzKxs.mp4' },
+  { id: 'hero_seaview', name: 'Sea View', url: 'https://www.wooowinvites.com/assets/sea-view-theme-CqN1unYE.mp4' },
+  { id: 'hero_palm', name: 'Palm Zoom', url: 'https://www.wooowinvites.com/assets/palm-zoom-theme-DTmwX1Yh.mp4' },
+  { id: 'hero_car', name: 'Just Married Car', url: 'https://www.wooowinvites.com/assets/just-married-car-theme-BhahCrzF.mp4' },
+  { id: 'hero_castle', name: 'Castle', url: 'https://www.wooowinvites.com/assets/castle-theme-DW5muDbc.mp4' },
+  { id: 'hero_royal', name: 'Royal Heritage', url: 'https://www.wooowinvites.com/assets/royal-heritage-theme-Czr23y-Y.mp4' },
+  { id: 'hero_sea_anim', name: 'Sea Animation', url: 'https://www.wooowinvites.com/assets/sea-theme-animation-D5DLPcRz.mp4' },
+  { id: 'hero_sea_balcony', name: 'Seaview Balcony', url: 'https://www.wooowinvites.com/assets/seaview-balcony-theme-X8-zUaoe.mp4' },
   { id: 'hero_custom', name: "I'll provide my own" },
 ];
 
@@ -162,11 +167,59 @@ export default function CheckoutClient() {
     specialRequests: '',
     inspirationLinks: '',
     sectionsWanted: ['intro', 'venue', 'schedule', 'rsvp', 'gallery'],
+    menuDetails: '',
+    menuFile: null,        // { name, content (base64) }
+    galleryPhotos: [],     // Array of { name, content (base64) }
+    customHeroVideo: null, // { name, content (base64) }
   });
 
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
   const [paymentProcessing, setPaymentProcessing] = useState(false);
+
+  const handleFileChange = (e, field) => {
+    const files = Array.from(e.target.files);
+    if (files.length === 0) return;
+
+    if (field === 'galleryPhotos') {
+      const promises = files.map(file => {
+        return new Promise((resolve) => {
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            resolve({
+              name: file.name,
+              size: file.size,
+              type: file.type,
+              content: reader.result.split(',')[1] // Strip prefix
+            });
+          };
+          reader.readAsDataURL(file);
+        });
+      });
+
+      Promise.all(promises).then(newPhotos => {
+        setPremiumForm(prev => ({
+          ...prev,
+          galleryPhotos: [...prev.galleryPhotos, ...newPhotos]
+        }));
+      });
+    } else if (field === 'customHeroVideo' || field === 'menuFile') {
+      const file = files[0];
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPremiumForm(prev => ({
+          ...prev,
+          [field]: {
+            name: file.name,
+            size: file.size,
+            type: file.type,
+            content: reader.result.split(',')[1] // Strip prefix
+          }
+        }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   const isPremiumOrExcellence = selectedPackage.id === 'premium' || selectedPackage.id === 'excellence';
 
@@ -185,6 +238,14 @@ export default function CheckoutClient() {
     const saved = typeof window !== 'undefined' && localStorage.getItem('selectedTemplate');
     if (saved && themes.find(t => t.id === saved)) {
       setSelectedTheme(saved);
+    }
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      const plan = params.get('plan');
+      if (plan) {
+        const found = packages.find(p => p.id === plan);
+        if (found) setSelectedPackage(found);
+      }
     }
   }, []);
 
@@ -254,6 +315,28 @@ export default function CheckoutClient() {
       const envName = ENVELOPE_OPTIONS.find(e => e.id === premiumForm.envelopeChoice)?.name || premiumForm.envelopeChoice || 'Not specified';
       const heroName = HERO_VIDEO_OPTIONS.find(h => h.id === premiumForm.heroVideoChoice)?.name || premiumForm.heroVideoChoice || 'Not specified';
 
+      const attachments = [];
+      if (premiumForm.menuFile) {
+        attachments.push({
+          filename: premiumForm.menuFile.name,
+          content: premiumForm.menuFile.content,
+        });
+      }
+      if (premiumForm.customHeroVideo) {
+        attachments.push({
+          filename: premiumForm.customHeroVideo.name,
+          content: premiumForm.customHeroVideo.content,
+        });
+      }
+      if (premiumForm.galleryPhotos && premiumForm.galleryPhotos.length > 0) {
+        premiumForm.galleryPhotos.forEach(p => {
+          attachments.push({
+            filename: p.name,
+            content: p.content,
+          });
+        });
+      }
+
       await fetch('/api/send-order', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -278,6 +361,8 @@ export default function CheckoutClient() {
           sectionsWanted: premiumForm.sectionsWanted.map(
             k => SECTION_OPTIONS.find(s => s.key === k)?.label || k
           ),
+          menuDetails: premiumForm.menuDetails,
+          attachments,
         }),
       });
       setSent(true);
@@ -548,28 +633,155 @@ export default function CheckoutClient() {
                   <input type="tel" placeholder="+33 6 12 34 56 78" value={premiumForm.phone} onChange={e => setPremiumForm({...premiumForm, phone: e.target.value})} style={inputStyle} />
                 </div>
 
-                {/* Design Preferences */}
+                {/* Design Preferences (Visual selectors) */}
                 <div className="checkout-box" style={{ backgroundColor: '#fff', borderRadius: '20px', padding: '2rem 2.5rem', boxShadow: '0 4px 24px rgba(0,0,0,0.02)', border: '1px solid rgba(0,0,0,0.04)' }}>
-                  <div style={{ fontSize: '0.75rem', letterSpacing: '2px', color: '#6b363e', textTransform: 'uppercase', marginBottom: '1.5rem', fontWeight: 600 }}>🎨 Design Preferences</div>
-                  <div className="checkout-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
-                    <div>
-                      <label style={labelStyle}>Envelope animation</label>
-                      <select value={premiumForm.envelopeChoice} onChange={e => setPremiumForm({...premiumForm, envelopeChoice: e.target.value})} style={selectStyle}>
-                        <option value="">Choose...</option>
-                        {ENVELOPE_OPTIONS.map(e => <option key={e.id} value={e.id}>{e.name}</option>)}
-                      </select>
-                    </div>
-                    <div>
-                      <label style={labelStyle}>Hero video</label>
-                      <select value={premiumForm.heroVideoChoice} onChange={e => setPremiumForm({...premiumForm, heroVideoChoice: e.target.value})} style={selectStyle}>
-                        <option value="">Choose...</option>
-                        {HERO_VIDEO_OPTIONS.map(h => <option key={h.id} value={h.id}>{h.name}</option>)}
-                      </select>
-                    </div>
+                  <div style={{ fontSize: '0.75rem', letterSpacing: '2px', color: '#6b363e', textTransform: 'uppercase', marginBottom: '1.5rem', fontWeight: 600 }}>🎨 Envelope Choice</div>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))', gap: '0.75rem', marginBottom: '2rem' }}>
+                    {ENVELOPE_OPTIONS.map(e => {
+                      const isSelected = premiumForm.envelopeChoice === e.id;
+                      return (
+                        <div key={e.id} onClick={() => setPremiumForm({...premiumForm, envelopeChoice: e.id})}
+                          style={{
+                            border: isSelected ? '2.5px solid #6b363e' : '1px solid #e0dcd7',
+                            borderRadius: '12px', padding: '0.5rem', cursor: 'pointer',
+                            backgroundColor: isSelected ? '#faf5f6' : '#fff',
+                            transition: 'all 0.2s', textAlign: 'center'
+                          }}>
+                          <div style={{ height: '70px', borderRadius: '8px', overflow: 'hidden', backgroundColor: e.color || '#ccc', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
+                            {e.url && !e.url.endsWith('.m3u8') && e.id !== 'env_custom' ? (
+                              <video src={e.url} autoPlay loop muted playsInline style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                            ) : e.id === 'env_custom' ? (
+                              <span style={{ fontSize: '1.5rem' }}>📤</span>
+                            ) : (
+                              <div style={{ width: '100%', height: '100%', backgroundColor: e.color }} />
+                            )}
+                          </div>
+                          <div style={{ fontSize: '0.75rem', fontWeight: 600, marginTop: '0.5rem', color: isSelected ? '#6b363e' : '#333', textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden' }}>
+                            {e.name}
+                          </div>
+                        </div>
+                      );
+                    })}
                   </div>
+
+                  {/* Custom Envelope File Upload */}
+                  {premiumForm.envelopeChoice === 'env_custom' && (
+                    <div style={{ marginBottom: '2rem', padding: '1rem', border: '2px dashed #e0dcd7', borderRadius: '12px', backgroundColor: '#faf8f5', textAlign: 'center' }}>
+                      <label style={{ cursor: 'pointer', display: 'block' }}>
+                        <span style={{ fontSize: '1.5rem', display: 'block', marginBottom: '0.5rem' }}>✉️</span>
+                        <span style={{ fontSize: '0.85rem', color: '#6b363e', fontWeight: 600 }}>Click to upload envelope video (.mp4)</span>
+                        <input type="file" accept="video/mp4" onChange={(e) => {
+                          const file = e.target.files[0];
+                          if (file) {
+                            const reader = new FileReader();
+                            reader.onloadend = () => {
+                              setPremiumForm(prev => ({
+                                ...prev,
+                                envelopeChoice: `Custom Uploaded: ${file.name}`
+                              }));
+                            };
+                            reader.readAsDataURL(file);
+                          }
+                        }} style={{ display: 'none' }} />
+                      </label>
+                    </div>
+                  )}
+
+                  <div style={{ fontSize: '0.75rem', letterSpacing: '2px', color: '#6b363e', textTransform: 'uppercase', marginBottom: '1.5rem', fontWeight: 600 }}>🎬 Hero Video Choice</div>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))', gap: '0.75rem', marginBottom: '2rem' }}>
+                    {HERO_VIDEO_OPTIONS.map(h => {
+                      const isSelected = premiumForm.heroVideoChoice === h.id;
+                      return (
+                        <div key={h.id} onClick={() => setPremiumForm({...premiumForm, heroVideoChoice: h.id})}
+                          style={{
+                            border: isSelected ? '2.5px solid #6b363e' : '1px solid #e0dcd7',
+                            borderRadius: '12px', padding: '0.5rem', cursor: 'pointer',
+                            backgroundColor: isSelected ? '#faf5f6' : '#fff',
+                            transition: 'all 0.2s', textAlign: 'center'
+                          }}>
+                          <div style={{ height: '70px', borderRadius: '8px', overflow: 'hidden', backgroundColor: '#eaeaea', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
+                            {h.url && h.id !== 'hero_custom' ? (
+                              <video src={h.url} autoPlay loop muted playsInline style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                            ) : (
+                              <span style={{ fontSize: '1.5rem' }}>📤</span>
+                            )}
+                          </div>
+                          <div style={{ fontSize: '0.75rem', fontWeight: 600, marginTop: '0.5rem', color: isSelected ? '#6b363e' : '#333', textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden' }}>
+                            {h.name}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+
+                  {/* Custom Hero Video File Upload */}
+                  {premiumForm.heroVideoChoice === 'hero_custom' && (
+                    <div style={{ marginBottom: '2rem', padding: '1.2rem', border: '2px dashed #e0dcd7', borderRadius: '12px', backgroundColor: '#faf8f5', textAlign: 'center' }}>
+                      <label style={{ cursor: 'pointer', display: 'block' }}>
+                        <span style={{ fontSize: '1.5rem', display: 'block', marginBottom: '0.5rem' }}>🎥</span>
+                        <span style={{ fontSize: '0.85rem', color: '#6b363e', fontWeight: 600 }}>Click to upload custom hero video (.mp4)</span>
+                        <input type="file" accept="video/mp4" onChange={(e) => handleFileChange(e, 'customHeroVideo')} style={{ display: 'none' }} />
+                      </label>
+                      {premiumForm.customHeroVideo && (
+                        <div style={{ fontSize: '0.8rem', color: '#2d8a4e', marginTop: '0.5rem', fontWeight: 600 }}>
+                          Selected: {premiumForm.customHeroVideo.name} ({(premiumForm.customHeroVideo.size / (1024*1024)).toFixed(2)} MB)
+                        </div>
+                      )}
+                    </div>
+                  )}
+
                   <div>
                     <label style={labelStyle}>Color preferences</label>
                     <input type="text" placeholder="e.g. Blush pink, gold, ivory" value={premiumForm.colorPreferences} onChange={e => setPremiumForm({...premiumForm, colorPreferences: e.target.value})} style={inputStyle} />
+                  </div>
+                </div>
+
+                {/* Photo Gallery Upload */}
+                <div className="checkout-box" style={{ backgroundColor: '#fff', borderRadius: '20px', padding: '2rem 2.5rem', boxShadow: '0 4px 24px rgba(0,0,0,0.02)', border: '1px solid rgba(0,0,0,0.04)' }}>
+                  <div style={{ fontSize: '0.75rem', letterSpacing: '2px', color: '#6b363e', textTransform: 'uppercase', marginBottom: '1.5rem', fontWeight: 600 }}>📸 Photo Gallery</div>
+                  <p style={{ fontSize: '0.85rem', color: '#888', marginBottom: '1rem' }}>Upload photos you want us to include in your gallery (Max 10 photos)</p>
+                  
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '0.5rem', marginBottom: '1rem' }}>
+                    {premiumForm.galleryPhotos.map((photo, index) => (
+                      <div key={index} style={{ position: 'relative', width: '100%', paddingBottom: '100%', borderRadius: '8px', overflow: 'hidden', border: '1px solid #e0dcd7' }}>
+                        <img src={`data:${photo.type};base64,${photo.content}`} alt="Gallery preview" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
+                        <button onClick={() => {
+                          setPremiumForm(prev => ({
+                            ...prev,
+                            galleryPhotos: prev.galleryPhotos.filter((_, i) => i !== index)
+                          }));
+                        }} style={{ position: 'absolute', top: '2px', right: '2px', backgroundColor: 'rgba(0,0,0,0.6)', color: '#fff', border: 'none', borderRadius: '50%', width: '18px', height: '18px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.65rem', cursor: 'pointer' }}>
+                          ✕
+                        </button>
+                      </div>
+                    ))}
+                    {premiumForm.galleryPhotos.length < 10 && (
+                      <label style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', border: '1px dashed #ccc', borderRadius: '8px', cursor: 'pointer', minHeight: '60px' }}>
+                        <span style={{ fontSize: '1.2rem', color: '#888' }}>+</span>
+                        <input type="file" multiple accept="image/*" onChange={(e) => handleFileChange(e, 'galleryPhotos')} style={{ display: 'none' }} />
+                      </label>
+                    )}
+                  </div>
+                </div>
+
+                {/* Menu Details & Upload */}
+                <div className="checkout-box" style={{ backgroundColor: '#fff', borderRadius: '20px', padding: '2rem 2.5rem', boxShadow: '0 4px 24px rgba(0,0,0,0.02)', border: '1px solid rgba(0,0,0,0.04)' }}>
+                  <div style={{ fontSize: '0.75rem', letterSpacing: '2px', color: '#6b363e', textTransform: 'uppercase', marginBottom: '1.5rem', fontWeight: 600 }}>🍽️ Menu & Reception details</div>
+                  <div style={{ marginBottom: '1.5rem' }}>
+                    <label style={labelStyle}>Write your menu courses / details</label>
+                    <textarea placeholder="Appetizers, main courses, desserts, dietary options..." value={premiumForm.menuDetails} onChange={e => setPremiumForm({...premiumForm, menuDetails: e.target.value})} rows={4} style={{ ...inputStyle, resize: 'vertical' }} />
+                  </div>
+                  <div style={{ padding: '1rem', border: '2px dashed #e0dcd7', borderRadius: '12px', backgroundColor: '#faf8f5', textAlign: 'center' }}>
+                    <label style={{ cursor: 'pointer', display: 'block' }}>
+                      <span style={{ fontSize: '1.5rem', display: 'block', marginBottom: '0.5rem' }}>📄</span>
+                      <span style={{ fontSize: '0.85rem', color: '#6b363e', fontWeight: 600 }}>Upload menu file (PDF, Image)</span>
+                      <input type="file" accept="application/pdf,image/*" onChange={(e) => handleFileChange(e, 'menuFile')} style={{ display: 'none' }} />
+                    </label>
+                    {premiumForm.menuFile && (
+                      <div style={{ fontSize: '0.8rem', color: '#2d8a4e', marginTop: '0.5rem', fontWeight: 600 }}>
+                        Selected: {premiumForm.menuFile.name}
+                      </div>
+                    )}
                   </div>
                 </div>
 
@@ -597,14 +809,14 @@ export default function CheckoutClient() {
 
                 {/* Extra Notes */}
                 <div className="checkout-box" style={{ backgroundColor: '#fff', borderRadius: '20px', padding: '2rem 2.5rem', boxShadow: '0 4px 24px rgba(0,0,0,0.02)', border: '1px solid rgba(0,0,0,0.04)' }}>
-                  <div style={{ fontSize: '0.75rem', letterSpacing: '2px', color: '#6b363e', textTransform: 'uppercase', marginBottom: '1.5rem', fontWeight: 600 }}>💬 Additional Details</div>
+                  <div style={{ fontSize: '0.75rem', letterSpacing: '2px', color: '#6b363e', textTransform: 'uppercase', marginBottom: '1.5rem', fontWeight: 600 }}>💬 Additional Details & Notes</div>
                   <div style={{ marginBottom: '1rem' }}>
                     <label style={labelStyle}>Inspiration links</label>
                     <textarea placeholder="Share any Pinterest boards, Instagram posts, or websites you love..." value={premiumForm.inspirationLinks} onChange={e => setPremiumForm({...premiumForm, inspirationLinks: e.target.value})} rows={3} style={{ ...inputStyle, resize: 'vertical' }} />
                   </div>
                   <div>
-                    <label style={labelStyle}>Special requests</label>
-                    <textarea placeholder="Anything else you'd like us to know..." value={premiumForm.specialRequests} onChange={e => setPremiumForm({...premiumForm, specialRequests: e.target.value})} rows={3} style={{ ...inputStyle, resize: 'vertical' }} />
+                    <label style={labelStyle}>Details / requests to add</label>
+                    <textarea placeholder="Write down any text blocks, timeline events, or special layout requests you want us to add..." value={premiumForm.specialRequests} onChange={e => setPremiumForm({...premiumForm, specialRequests: e.target.value})} rows={3} style={{ ...inputStyle, resize: 'vertical' }} />
                   </div>
                 </div>
 
