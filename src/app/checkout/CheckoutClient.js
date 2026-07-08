@@ -440,24 +440,37 @@ export default function CheckoutClient() {
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <span style={{ fontSize: '0.9rem', color: '#555', letterSpacing: '2px', textTransform: 'uppercase' }}>PLAN</span>
                   <div style={{ flex: 1, borderBottom: '1px dotted #ccc', margin: '0 1rem' }}></div>
-                  <span style={{ fontWeight: 600 }}>{selectedPackage.price}$</span>
-                </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <span style={{ fontSize: '0.9rem', color: '#555', letterSpacing: '2px', textTransform: 'uppercase' }}>STYLE</span>
-                  <div style={{ flex: 1, borderBottom: '1px dotted #ccc', margin: '0 1rem' }}></div>
-                  <span style={{ fontWeight: 600 }}>{themeName}</span>
+                  <span style={{ fontWeight: 600 }}>{selectedPackage.name}</span>
                 </div>
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
                 <span style={{ fontSize: '1rem', fontWeight: 600, letterSpacing: '3px', textTransform: 'uppercase' }}>TOTAL</span>
                 <span style={{ fontSize: '1.8rem', fontFamily: 'var(--font-heading)', color: '#6b363e' }}>{total}$</span>
               </div>
-              {isPremiumOrExcellence && (
+              {isPremiumOrExcellence ? (
                 <div style={{ backgroundColor: '#faf5f0', borderRadius: '12px', padding: '1.5rem', display: 'flex', gap: '1rem', marginBottom: '1.5rem', border: '1px solid #e8ddd4' }}>
-                  <div style={{ fontSize: '1.2rem' }}>🎨</div>
+                  <div style={{ fontSize: '1.25rem' }}>🎨</div>
                   <div>
-                    <div style={{ fontSize: '0.85rem', fontWeight: 700, letterSpacing: '1px', color: '#8b6e5a', marginBottom: '0.25rem' }}>HANDCRAFTED BY OUR TEAM</div>
-                    <div style={{ fontSize: '0.9rem', color: '#888', lineHeight: 1.5 }}>After payment, you'll share your wedding details with us. We'll start crafting your invitation and contact you within 24h.</div>
+                    <div style={{ fontSize: '0.85rem', fontWeight: 700, letterSpacing: '1px', color: '#8b6e5a', marginBottom: '0.25rem', textTransform: 'uppercase' }}>What happens next?</div>
+                    <div style={{ fontSize: '0.9rem', color: '#666', lineHeight: 1.5 }}>
+                      1. You complete the payment.<br/>
+                      2. You fill out our quick wedding questionnaire (photos, music, details).<br/>
+                      3. Our design team creates your custom invitation.<br/>
+                      4. We refine it together until you love it.
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <div style={{ backgroundColor: '#faf5f0', borderRadius: '12px', padding: '1.5rem', display: 'flex', gap: '1rem', marginBottom: '1.5rem', border: '1px solid #e8ddd4' }}>
+                  <div style={{ fontSize: '1.25rem' }}>✨</div>
+                  <div>
+                    <div style={{ fontSize: '0.85rem', fontWeight: 700, letterSpacing: '1px', color: '#8b6e5a', marginBottom: '0.25rem', textTransform: 'uppercase' }}>What happens next?</div>
+                    <div style={{ fontSize: '0.9rem', color: '#666', lineHeight: 1.5 }}>
+                      1. You complete the payment.<br/>
+                      2. You gain instant access to your private dashboard.<br/>
+                      3. Choose your template and enter your wedding details.<br/>
+                      4. Publish your invitation and start receiving RSVPs!
+                    </div>
                   </div>
                 </div>
               )}
