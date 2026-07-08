@@ -232,7 +232,7 @@ export default function BordeauxTemplate({ data, editMode = false, autoPlaySimul
           ) : (
             <video
               autoPlay
-              loop
+              loop={videos.hero !== videos.envelope}
               muted={isMuted}
               playsInline
               className={styles.heroVideo}

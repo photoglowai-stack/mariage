@@ -63,7 +63,7 @@ export default function TemplateHeroPreview({ partner1 = "Emma", partner2 = "Lia
       {isImage ? (
         <img src={videoSrc} alt="Preview" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
       ) : (
-        <video src={videoSrc} autoPlay loop muted playsInline style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+        <video src={videoSrc} autoPlay loop={videoSrc !== envelopeSrc} muted playsInline style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
       )}
       <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0,0,0,0.2)' }} />
       
