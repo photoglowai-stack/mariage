@@ -20,7 +20,7 @@ export default function Header() {
         </div>
         <nav className="header-nav">
           <Link href="/">Home</Link>
-          <Link href="/gallery">Gallery</Link>
+          <Link href="/templates">Gallery</Link>
           <Link href="/process">Process</Link>
           <Link href="/packages">Packages</Link>
           <Link href="/story">Our Story</Link>
@@ -44,7 +44,7 @@ export default function Header() {
       {/* Mobile nav overlay */}
       <div className={`mobile-nav-overlay ${menuOpen ? "open" : ""}`}>
         <Link href="/" onClick={closeMenu}>Home</Link>
-        <Link href="/gallery" onClick={closeMenu}>Gallery</Link>
+        <Link href="/templates" onClick={closeMenu}>Gallery</Link>
         <Link href="/process" onClick={closeMenu}>Process</Link>
         <Link href="/packages" onClick={closeMenu}>Packages</Link>
         <Link href="/story" onClick={closeMenu}>Our Story</Link>

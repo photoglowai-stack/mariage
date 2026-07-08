@@ -154,7 +154,7 @@ export default function Vision() {
             <Link href="/checkout" className="btn-primary" style={{ backgroundColor: 'var(--color-background)', color: 'var(--color-foreground)', borderColor: 'var(--color-background)' }}>
               Order Now
             </Link>
-            <Link href="/gallery" className="btn-secondary" style={{ borderColor: 'rgba(250,249,246,0.3)', color: 'var(--color-background)' }}>
+            <Link href="/templates" className="btn-secondary" style={{ borderColor: 'rgba(250,249,246,0.3)', color: 'var(--color-background)' }}>
               Explore Gallery
             </Link>
           </div>
