@@ -134,13 +134,15 @@ const ScratchCircle = ({ size = 100, label, revealText, color = '#c5975b', onRev
         <div style={{
           position: 'absolute', inset: 0,
           display: 'flex', alignItems: 'center', justifyContent: 'center',
-          fontSize: size * 0.28, fontWeight: 700,
+          fontSize: size * 0.3, fontWeight: 700,
           fontFamily: "'Harmond', 'Zen Old Mincho', serif",
-          color: '#1a1a1a',
-          letterSpacing: '1px',
+          color: '#2c1810',
+          letterSpacing: '2px',
+          background: 'radial-gradient(circle, #f5efe6 0%, #e8ddd0 60%, #d4c5b2 100%)',
+          borderRadius: '50%',
           transition: 'transform 0.5s ease, opacity 0.5s ease',
-          transform: isRevealed ? 'scale(1)' : 'scale(0.8)',
-          opacity: isRevealed ? 1 : 0.7,
+          transform: isRevealed ? 'scale(1)' : 'scale(0.95)',
+          opacity: 1,
         }}>
           {revealText}
         </div>
