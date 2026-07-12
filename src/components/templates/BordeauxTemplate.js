@@ -3,6 +3,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Hls from 'hls.js';
 import ScratchReveal from '../ScratchReveal';
+import FlipCountdown from '../FlipCountdown';
+import ShakeConfetti from '../ShakeConfetti';
+import MagicRevealCard from '../MagicRevealCard';
 import styles from './BordeauxTemplate.module.css';
 
 // Hook for scroll animations
@@ -143,6 +146,10 @@ export default function BordeauxTemplate({ data, editMode = false, autoPlaySimul
   const partner2 = t.partner2 || "Isabelle";
   const showPartner2 = t.showPartner2 !== false;
   const dateStr = t.date || "MAY 27, 2026";
+  // Parse target date for countdown ("MAY 27, 2026" → "2026-05-27")
+  const monthMap = { JAN: '01', FEB: '02', MAR: '03', APR: '04', MAY: '05', JUN: '06', JUL: '07', AUG: '08', SEP: '09', OCT: '10', NOV: '11', DEC: '12' };
+  const dp = dateStr.match(/(\w+)\s+(\d+),?\s+(\d{4})/);
+  const targetDate = dp ? `${dp[3]}-${monthMap[dp[1].toUpperCase()] || '01'}-${dp[2].padStart(2, '0')}` : '2026-05-27';
   const ceremonyVenue = t.ceremonyVenue || "Ocean front beach House";
   const receptionVenue = t.receptionVenue || "South Dixie Highway, Homestead, Miami-Dade County, Florida, 33030, United States";
   
@@ -306,6 +313,14 @@ export default function BordeauxTemplate({ data, editMode = false, autoPlaySimul
           dateStr={dateStr}
           accentColor="#c5975b"
           bgColor="#1a1a1a"
+          textColor="#fff"
+        />
+
+        {/* ================= FLIP COUNTDOWN ================= */}
+        <FlipCountdown
+          targetDate={targetDate}
+          accentColor="#c5975b"
+          bgColor="#0f0f0f"
           textColor="#fff"
         />
 
@@ -494,6 +509,26 @@ export default function BordeauxTemplate({ data, editMode = false, autoPlaySimul
                ]} />
           </section>
         )}
+
+        {/* ================= SHAKE CONFETTI ================= */}
+        <ShakeConfetti
+          message={`${partner1} & ${showPartner2 ? partner2 : ''} 💍`}
+          subMessage="We can't wait to celebrate with you"
+          accentColor="#c5975b"
+          bgColor="#0f0f0f"
+          textColor="#fff"
+        />
+
+        {/* ================= MAGIC REVEAL CARD ================= */}
+        <MagicRevealCard
+          frontTitle="Hold to Discover"
+          revealTitle={`${partner1}${showPartner2 ? ` & ${partner2}` : ''}`}
+          revealSubtitle="Request the honor of your presence"
+          revealDate={dateStr}
+          accentColor="#c5975b"
+          bgColor="#1a1a1a"
+          textColor="#fff"
+        />
 
         {/* ================= RSVP SECTION ================= */}
         {sections.showRSVP !== false && (
