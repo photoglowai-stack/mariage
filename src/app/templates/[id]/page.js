@@ -41,54 +41,6 @@ export default function TemplateDetailPage({ params }) {
 
   return (
     <div style={{ position: 'relative', width: '100%', minHeight: '100vh', backgroundColor: '#FAF9F6' }}>
-      
-      {/* Floating Header Banner for Preview */}
-      <div style={{
-        position: 'fixed', top: '1.25rem', left: '50%', transform: 'translateX(-50%)',
-        zIndex: 9999, display: 'flex', alignItems: 'center', gap: '1.25rem',
-        padding: '0.65rem 1.25rem', borderRadius: '30px',
-        backgroundColor: 'rgba(255, 255, 255, 0.96)', backdropFilter: 'blur(10px)',
-        boxShadow: '0 10px 25px rgba(0,0,0,0.08), 0 3px 8px rgba(0,0,0,0.04)',
-        border: '1px solid rgba(0,0,0,0.05)', width: 'max-content', maxWidth: '90%'
-      }}>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1px', paddingRight: '0.5rem' }}>
-          <span style={{ fontSize: '0.8rem', fontWeight: 600, color: '#1a1a1a', fontFamily: 'var(--font-body)' }}>
-            Design: <span style={{ color: '#6b363e' }}>{tpl.name}</span>
-          </span>
-          <span style={{ fontSize: '0.6rem', color: '#999', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 500 }}>
-            Live Preview
-          </span>
-        </div>
-
-        <div style={{ display: 'flex', gap: '0.5rem' }}>
-          <button 
-            onClick={() => router.push('/templates')}
-            style={{
-              padding: '0.5rem 1.1rem', borderRadius: '20px', border: '1px solid #ddd',
-              backgroundColor: '#fff', color: '#555', cursor: 'pointer',
-              fontSize: '0.75rem', fontWeight: 600, transition: 'all 0.2s',
-              fontFamily: 'var(--font-body)'
-            }}
-            onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#f5f5f5'; }}
-            onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#fff'; }}
-          >
-            Exit
-          </button>
-          <button 
-            onClick={handleSelect}
-            style={{
-              padding: '0.5rem 1.1rem', borderRadius: '20px', border: 'none',
-              backgroundColor: '#6b363e', color: '#fff', cursor: 'pointer',
-              fontSize: '0.75rem', fontWeight: 600, transition: 'all 0.2s',
-              boxShadow: '0 2px 8px rgba(107,54,62,0.2)', fontFamily: 'var(--font-body)'
-            }}
-            onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-1px)'; }}
-            onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; }}
-          >
-            Choose Design
-          </button>
-        </div>
-      </div>
 
       {/* Main Template Content rendering full screen */}
       <BordeauxTemplate 
