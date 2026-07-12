@@ -174,39 +174,34 @@ export default function Templates() {
       {previewTemplate && (
         <div style={{
           position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh',
-          backgroundColor: 'rgba(0,0,0,0.9)', zIndex: 10000, display: 'flex',
-          justifyContent: 'center', alignItems: 'center'
-        }} onClick={() => setPreviewTemplate(null)}>
+          backgroundColor: '#FAF9F6', zIndex: 10000, overflowY: 'auto', overflowX: 'hidden'
+        }}>
+          {/* Close Button */}
           <button style={{
-            position: 'absolute', top: '2rem', right: '2rem',
-            background: 'none', border: 'none', color: '#fff',
-            cursor: 'pointer', padding: '0.5rem'
+            position: 'fixed', top: '1.5rem', right: '1.5rem',
+            background: 'rgba(0,0,0,0.6)', border: 'none', color: '#fff',
+            cursor: 'pointer', padding: '0.8rem', borderRadius: '50%',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            zIndex: 10001, boxShadow: '0 4px 10px rgba(0,0,0,0.3)',
+            transition: 'background 0.2s'
           }} onClick={() => setPreviewTemplate(null)}>
             <CloseIcon />
           </button>
           
-          <div style={{
-            width: '350px', height: '620px', backgroundColor: '#000',
-            borderRadius: '40px', padding: '12px', border: '2px solid #333',
-            boxShadow: '0 20px 50px rgba(0,0,0,0.5)', position: 'relative', overflow: 'hidden'
-          }} onClick={(e) => e.stopPropagation()}>
-            <div className="hide-scrollbar" style={{ width: '100%', height: '100%', overflowY: 'auto', overflowX: 'hidden', borderRadius: '28px', backgroundColor: '#fff' }}>
-               <div style={{ width: '450px', zoom: (326/450) }}>
-                  <BordeauxTemplate 
-                    editMode={false}
-                    heroHeight="820px"
-                    data={{
-                      partner1: previewTemplate.partner1,
-                      partner2: previewTemplate.partner2,
-                      videos: {
-                        envelope: previewTemplate.envelope,
-                        hero: previewTemplate.video
-                      },
-                      sections: { showIntro: true, showVenue: true, showSchedule: true, showBoardingPass: true, showRSVP: true, showGallery: true }
-                    }}
-                  />
-               </div>
-            </div>
+          <div style={{ width: '100%', minHeight: '100vh' }}>
+            <BordeauxTemplate 
+              editMode={false}
+              heroHeight="100vh"
+              data={{
+                partner1: previewTemplate.partner1,
+                partner2: previewTemplate.partner2,
+                videos: {
+                  envelope: previewTemplate.envelope,
+                  hero: previewTemplate.video
+                },
+                sections: { showIntro: true, showVenue: true, showSchedule: true, showBoardingPass: true, showRSVP: true, showGallery: true }
+              }}
+            />
           </div>
         </div>
       )}
