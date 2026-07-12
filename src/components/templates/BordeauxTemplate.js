@@ -222,6 +222,79 @@ const DressCodeSection = ({ t, accentColor }) => {
   );
 };
 
+const themes = {
+  bordeaux: {
+    primary: '#6b363e',
+    secondary: '#8c7365',
+    accent: '#c5975b',
+    fontHeading: "'Harmond', 'Zen Old Mincho', serif",
+    bgColor: '#FAF9F6'
+  },
+  champagne: {
+    primary: '#b89c72',
+    secondary: '#8e795c',
+    accent: '#d9cbb6',
+    fontHeading: "'Cormorant Garamond', serif",
+    bgColor: '#FCFAF5'
+  },
+  ivory: {
+    primary: '#615347',
+    secondary: '#8a7d72',
+    accent: '#d5cdbe',
+    fontHeading: "'EB Garamond', serif",
+    bgColor: '#FAF9F6'
+  },
+  sage: {
+    primary: '#556b2f',
+    secondary: '#8fbc8f',
+    accent: '#d9e2ec',
+    fontHeading: "'Playfair Display', serif",
+    bgColor: '#F4F7F4'
+  },
+  terracotta: {
+    primary: '#c57056',
+    secondary: '#8a6552',
+    accent: '#d98b73',
+    fontHeading: "'Playfair Display', serif",
+    bgColor: '#FAF7F2'
+  },
+  royalbordeaux: {
+    primary: '#6b363e',
+    secondary: '#8c7365',
+    accent: '#c5975b',
+    fontHeading: "'Harmond', 'Zen Old Mincho', serif",
+    bgColor: '#FAF9F6'
+  },
+  royalblue: {
+    primary: '#1d3557',
+    secondary: '#457b9d',
+    accent: '#8fa89b',
+    fontHeading: "'Cinzel', serif",
+    bgColor: '#F1F5F9'
+  },
+  chocolate: {
+    primary: '#4e3629',
+    secondary: '#705345',
+    accent: '#c5975b',
+    fontHeading: "'EB Garamond', serif",
+    bgColor: '#FAF7F2'
+  },
+  rosebow: {
+    primary: '#b07d80',
+    secondary: '#8a686a',
+    accent: '#e6b8ba',
+    fontHeading: "'Playfair Display', serif",
+    bgColor: '#FFFBFB'
+  },
+  majestic: {
+    primary: '#8a7355',
+    secondary: '#a38f75',
+    accent: '#c5975b',
+    fontHeading: "'Cormorant Garamond', serif",
+    bgColor: '#FCFAF7'
+  }
+};
+
 export default function BordeauxTemplate({ data, editMode = false, autoPlaySimulation = false, onEnvelopeDismissed, heroHeight = '100vh' }) {
   const [isMuted, setIsMuted] = useState(true);
   const [accompaniedStatus, setAccompaniedStatus] = useState("");
@@ -267,6 +340,17 @@ export default function BordeauxTemplate({ data, editMode = false, autoPlaySimul
 
   // Valeurs par défaut si `data` est vide
   const t = data || {};
+  const themeId = t.themeId || data?.themeId || "royalbordeaux";
+  const theme = themes[themeId] || themes.royalbordeaux;
+
+  const styleVariables = {
+    '--color-primary': theme.primary,
+    '--color-secondary': theme.secondary,
+    '--color-accent': theme.accent,
+    '--font-heading-family': theme.fontHeading,
+    '--color-background': theme.bgColor,
+  };
+
   const partner1 = t.partner1 || "Gregory";
   const partner2 = t.partner2 || "Isabelle";
   const showPartner2 = t.showPartner2 !== false;
@@ -339,8 +423,10 @@ export default function BordeauxTemplate({ data, editMode = false, autoPlaySimul
   };
 
   return (
-    <div className={styles.main}>
-      <div className={styles.container}>
+    <div className={styles.main} style={styleVariables}>
+      {/* Dynamic Font Loader */}
+      <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,700;1,400&family=EB+Garamond:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+      <div className={styles.container} style={{ backgroundColor: theme.bgColor }}>
         
         {/* ================= HERO SECTION ================= */}
         <section className={styles.hero} style={{ height: heroHeight, minHeight: heroHeight }}>

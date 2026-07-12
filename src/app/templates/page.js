@@ -45,7 +45,7 @@ export default function Templates() {
 
   const openPreview = (e, t) => {
     e.stopPropagation();
-    setPreviewTemplate(t);
+    router.push(`/templates/${t.id}`);
   };
 
   return (
@@ -66,7 +66,7 @@ export default function Templates() {
         .tpl-preview-btn { position: absolute; top: 12px; right: 12px; width: 32px; height: 32px; border-radius: 50%; background: rgba(255,255,255,0.85); backdrop-filter: blur(4px); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; z-index: 2; }
         @media (max-width: 900px) { .tpl-grid { grid-template-columns: repeat(2, 1fr); gap: 1.25rem; } }
         @media (max-width: 550px) { .tpl-grid { grid-template-columns: 1fr; gap: 1rem; } }
-        .back-btn { position: absolute; top: 1.5rem; left: 1.5rem; display: flex; align-items: center; gap: 0.5rem; color: #6b363e; text-decoration: none; font-weight: 600; font-size: 0.95rem; background: #fff; padding: 0.6rem 1.2rem; border-radius: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); transition: all 0.2s ease; z-index: 10; border: 1px solid rgba(0,0,0,0.03); }
+        .back-btn { position: absolute; top: 1.5rem; left: 1.5rem; display: flex; align-items: center; gap: 0.5rem; color: #6b363e; text-decoration: none; font-weight: 600; font-size: 0.95rem; background: #fff; padding: 0.6rem 1.25rem; border-radius: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); transition: all 0.2s ease; z-index: 10; border: 1px solid rgba(0,0,0,0.03); }
         .back-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
       `}</style>
 
@@ -94,9 +94,8 @@ export default function Templates() {
         {tags.map(tag => (
           <button key={tag} onClick={() => setFilter(tag)}
             style={{
-              padding: '0.45rem 1.1rem', borderRadius: '20px', border: '1px solid',
-              borderColor: filter === tag ? '#6b363e' : '#e0dcd7',
-              backgroundColor: filter === tag ? '#6b363e' : '#fff',
+              padding: '0.5rem 1.25rem', borderRadius: '30px', border: 'none',
+              backgroundColor: filter === tag ? '#6b363e' : '#eee',
               color: filter === tag ? '#fff' : '#555',
               cursor: 'pointer', fontSize: '0.85rem', fontWeight: 500, fontFamily: 'inherit',
               transition: 'all 0.15s'
@@ -169,42 +168,6 @@ export default function Templates() {
           Continue with {templates.find(t => t.id === selectedId)?.name} →
         </button>
       </div>
-
-      {/* Interactive Preview Modal */}
-      {previewTemplate && (
-        <div style={{
-          position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh',
-          backgroundColor: '#FAF9F6', zIndex: 10000, overflowY: 'auto', overflowX: 'hidden'
-        }}>
-          {/* Close Button */}
-          <button style={{
-            position: 'fixed', top: '1.5rem', right: '1.5rem',
-            background: 'rgba(0,0,0,0.6)', border: 'none', color: '#fff',
-            cursor: 'pointer', padding: '0.8rem', borderRadius: '50%',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            zIndex: 10001, boxShadow: '0 4px 10px rgba(0,0,0,0.3)',
-            transition: 'background 0.2s'
-          }} onClick={() => setPreviewTemplate(null)}>
-            <CloseIcon />
-          </button>
-          
-          <div style={{ width: '100%', minHeight: '100vh' }}>
-            <BordeauxTemplate 
-              editMode={false}
-              heroHeight="100vh"
-              data={{
-                partner1: previewTemplate.partner1,
-                partner2: previewTemplate.partner2,
-                videos: {
-                  envelope: previewTemplate.envelope,
-                  hero: previewTemplate.video
-                },
-                sections: { showIntro: true, showVenue: true, showSchedule: true, showBoardingPass: true, showRSVP: true, showGallery: true }
-              }}
-            />
-          </div>
-        </div>
-      )}
 
     </div>
   );

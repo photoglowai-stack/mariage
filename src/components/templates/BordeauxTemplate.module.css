@@ -1,18 +1,18 @@
 .main {
   width: 100%;
   height: 100%;
-  background-color: #F7F5F0;
+  background-color: var(--color-background, #FAF9F6);
   display: flex;
   justify-content: center;
   align-items: flex-start;
   color: #333;
-  --font-heading: 'Harmond', 'Zen Old Mincho', serif;
+  --font-heading: var(--font-heading-family, 'Harmond', 'Zen Old Mincho', serif);
 }
 
 .container {
   width: 100%;
   max-width: 450px;
-  background-color: white;
+  background-color: var(--color-background, white);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
   position: relative;
   display: flex;
@@ -27,7 +27,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #F7F5F0; /* Matches main background to hide the hero behind it */
+  background-color: var(--color-background, #FAF9F6); /* Matches main background to hide the hero behind it */
   z-index: 100;
   display: flex;
   flex-direction: column;
