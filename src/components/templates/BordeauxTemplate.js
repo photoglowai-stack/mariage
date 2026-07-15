@@ -345,7 +345,7 @@ export default function BordeauxTemplate({ data, editMode = false, autoPlaySimul
   }, [data?.videos?.envelope]);
 
   useEffect(() => {
-    if (autoPlaySimulation) {
+    if (autoPlaySimulation && envelopeReady) {
       const timer = setTimeout(() => {
         if (envelopeOpen) return;
         setEnvelopeOpen(true);
@@ -355,7 +355,7 @@ export default function BordeauxTemplate({ data, editMode = false, autoPlaySimul
       }, 500);
       return () => clearTimeout(timer);
     }
-  }, [autoPlaySimulation, envelopeOpen]);
+  }, [autoPlaySimulation, envelopeOpen, envelopeReady]);
 
   // Valeurs par défaut si `data` est vide
   const t = data || {};
@@ -428,7 +428,7 @@ export default function BordeauxTemplate({ data, editMode = false, autoPlaySimul
   );
 
   const handleEnvelopeClick = () => {
-    if (envelopeOpen) return; // Prevent double clicks
+    if (envelopeOpen || !envelopeReady) return; // Prevent double clicks before the opening video is ready
     
     setEnvelopeOpen(true);
     if (envelopeVideoRef.current) {
@@ -464,6 +464,7 @@ export default function BordeauxTemplate({ data, editMode = false, autoPlaySimul
                 onError={() => setEnvelopeDismissed(true)}
                 onEnded={handleVideoEnded}
               />
+              {!envelopeReady && <span className={styles.envelopeText}>Your invitation is arriving</span>}
             </div>
           )}
 

@@ -5,6 +5,7 @@ import React, { useEffect, useRef, useState } from 'react';
 export default function TemplateHeroPreview({ partner1 = "Emma", partner2 = "Liam", videoSrc, envelopeSrc, showEnvelope = false, isImage = false }) {
   const [envelopeDismissed, setEnvelopeDismissed] = useState(!showEnvelope);
   const [envelopeOpen, setEnvelopeOpen] = useState(false);
+  const [envelopeReady, setEnvelopeReady] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [videoFailed, setVideoFailed] = useState(false);
   const previewRef = useRef(null);
@@ -17,7 +18,7 @@ export default function TemplateHeroPreview({ partner1 = "Emma", partner2 = "Lia
 
     const observer = new IntersectionObserver(
       ([entry]) => setIsVisible(entry.isIntersecting),
-      { rootMargin: '240px 0px' }
+      { rootMargin: '80px 0px' }
     );
     observer.observe(preview);
     return () => observer.disconnect();
@@ -35,10 +36,12 @@ export default function TemplateHeroPreview({ partner1 = "Emma", partner2 = "Lia
   }, [isVisible, isImage]);
 
   useEffect(() => {
-    if (showEnvelope && envelopeSrc && !envelopeDismissed) {
+    if (isVisible && showEnvelope && envelopeSrc && !envelopeDismissed) {
       const video = envelopeVideoRef.current;
       if (!video) return;
 
+      setEnvelopeReady(false);
+      setEnvelopeOpen(false);
       let hls;
       let cancelled = false;
       const loadEnvelope = async () => {
@@ -59,18 +62,23 @@ export default function TemplateHeroPreview({ partner1 = "Emma", partner2 = "Lia
 
       loadEnvelope();
 
-      const timer = setTimeout(() => {
-        setEnvelopeOpen(true);
-        video.play().catch(e => console.log("Video play failed", e));
-      }, 1000);
-      
       return () => {
         cancelled = true;
-        clearTimeout(timer);
         if (hls) hls.destroy();
       };
     }
-  }, [showEnvelope, envelopeSrc, envelopeDismissed]);
+  }, [isVisible, showEnvelope, envelopeSrc, envelopeDismissed]);
+
+  useEffect(() => {
+    if (!isVisible || !showEnvelope || !envelopeSrc || !envelopeReady || envelopeDismissed) return undefined;
+
+    const timer = setTimeout(() => {
+      setEnvelopeOpen(true);
+      envelopeVideoRef.current?.play().catch(() => {});
+    }, 600);
+
+    return () => clearTimeout(timer);
+  }, [isVisible, showEnvelope, envelopeSrc, envelopeReady, envelopeDismissed]);
 
   const handleVideoEnded = () => {
     setEnvelopeDismissed(true);
@@ -88,12 +96,19 @@ export default function TemplateHeroPreview({ partner1 = "Emma", partner2 = "Lia
           opacity: envelopeDismissed ? 0 : 1,
           visibility: envelopeDismissed ? 'hidden' : 'visible'
         }}>
+          {!envelopeOpen && (
+            <span style={{ position: 'relative', zIndex: 1, color: '#6b363e', fontFamily: 'var(--font-heading, serif)', fontSize: '0.9em', letterSpacing: '0.12em', textTransform: 'uppercase' }}>
+              Opening invitation
+            </span>
+          )}
           <video 
             ref={envelopeVideoRef}
             muted
             playsInline
+            onCanPlay={() => setEnvelopeReady(true)}
             onEnded={handleVideoEnded}
-            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+            onError={() => setEnvelopeDismissed(true)}
+            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: envelopeReady ? 1 : 0, transition: 'opacity 250ms ease' }}
           />
         </div>
       )}

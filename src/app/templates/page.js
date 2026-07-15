@@ -135,8 +135,8 @@ export default function Templates() {
                       partner1={t.partner1} 
                       partner2={t.partner2} 
                       videoSrc={t.video} 
-                      envelopeSrc={null}
-                      showEnvelope={false}
+                      envelopeSrc={t.envelope}
+                      showEnvelope
                     />
                   </div>
                 </div>
