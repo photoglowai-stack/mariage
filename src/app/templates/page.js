@@ -1,9 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import TemplateHeroPreview from "../../components/TemplateHeroPreview";
-import BordeauxTemplate from "../../components/templates/BordeauxTemplate";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
@@ -51,11 +49,11 @@ export default function Templates() {
   return (
     <div style={{ backgroundColor: '#faf8f5', minHeight: '100vh', fontFamily: 'var(--font-body)', color: '#1a1a1a' }}>
       <style>{`
-        .tpl-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
-        .tpl-card { border-radius: 16px; overflow: hidden; background: #fff; border: 1px solid rgba(0,0,0,0.05); box-shadow: 0 2px 12px rgba(0,0,0,0.03); transition: transform 0.25s, box-shadow 0.25s; cursor: pointer; }
+        .tpl-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem; }
+        .tpl-card { min-width: 0; border-radius: 8px; overflow: hidden; background: #fff; border: 1px solid rgba(0,0,0,0.05); box-shadow: 0 2px 12px rgba(0,0,0,0.03); transition: transform 0.25s, box-shadow 0.25s; cursor: pointer; }
         .tpl-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.08); }
         .tpl-img-wrap { position: relative; aspect-ratio: 3/4; overflow: hidden; background: #f0ede9; }
-        .tpl-phone { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 55%; height: 75%; border-radius: 20px; overflow: hidden; box-shadow: 0 8px 30px rgba(0,0,0,0.15); border: 3px solid #222; }
+        .tpl-phone { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: min(55%, 190px); height: 75%; border-radius: 20px; overflow: hidden; box-shadow: 0 8px 30px rgba(0,0,0,0.15); border: 3px solid #222; background: #111; }
         .tpl-info { padding: 1.25rem 1.5rem; }
         .tpl-actions { display: flex; gap: 0; border-top: 1px solid #f0ede9; }
         .tpl-actions button { flex: 1; padding: 0.75rem; border: none; background: none; cursor: pointer; font-size: 0.85rem; font-weight: 500; font-family: inherit; color: #555; display: flex; align-items: center; justify-content: center; gap: 0.4rem; transition: background 0.15s; }
@@ -65,7 +63,21 @@ export default function Templates() {
         .tpl-popular { position: absolute; top: 12px; right: 12px; background: #b08968; color: #fff; font-size: 0.65rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: 6px; z-index: 2; letter-spacing: 0.5px; }
         .tpl-preview-btn { position: absolute; top: 12px; right: 12px; width: 32px; height: 32px; border-radius: 50%; background: rgba(255,255,255,0.85); backdrop-filter: blur(4px); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; z-index: 2; }
         @media (max-width: 900px) { .tpl-grid { grid-template-columns: repeat(2, 1fr); gap: 1.25rem; } }
-        @media (max-width: 550px) { .tpl-grid { grid-template-columns: 1fr; gap: 1rem; } }
+        .tpl-sticky-cta { position: fixed; bottom: max(1rem, env(safe-area-inset-bottom)); left: 50%; z-index: 999; }
+        @media (max-width: 550px) {
+          .tpl-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; }
+          .tpl-img-wrap { aspect-ratio: 4 / 5; }
+          .tpl-phone { width: 66%; height: 78%; border-width: 2px; border-radius: 15px; }
+          .tpl-info { padding: 0.8rem; }
+          .tpl-info > div { display: block !important; }
+          .tpl-info p { min-height: 2.6em; }
+          .tpl-badge { margin: 0.35rem 0 0; }
+          .tpl-actions button { min-height: 44px; padding: 0.55rem 0.3rem; font-size: 0.75rem; }
+          .back-btn { top: max(0.75rem, env(safe-area-inset-top)); left: 0.75rem; padding: 0.5rem 0.85rem; }
+          .tpl-sticky-cta { width: calc(100% - 2rem); }
+          .tpl-sticky-cta button { width: 100%; justify-content: center; padding: 0.9rem 1rem !important; font-size: 0.9rem !important; }
+        }
+        @media (prefers-reduced-motion: reduce) { .tpl-card, .tpl-sticky-cta, .tpl-phone { transition: none !important; } .tpl-card:hover { transform: none; } }
         .back-btn { position: absolute; top: 1.5rem; left: 1.5rem; display: flex; align-items: center; gap: 0.5rem; color: #6b363e; text-decoration: none; font-weight: 600; font-size: 0.95rem; background: #fff; padding: 0.6rem 1.25rem; border-radius: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); transition: all 0.2s ease; z-index: 10; border: 1px solid rgba(0,0,0,0.03); }
         .back-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
       `}</style>
@@ -80,8 +92,8 @@ export default function Templates() {
       </Link>
 
       {/* Header */}
-      <div style={{ textAlign: 'center', padding: '4rem 2rem 2rem' }}>
-        <h1 style={{ fontSize: '2.5rem', fontFamily: 'var(--font-heading)', fontWeight: 400, marginBottom: '0.75rem' }}>
+      <div style={{ textAlign: 'center', padding: '4rem 1rem 2rem' }}>
+        <h1 style={{ fontSize: 'clamp(2rem, 8vw, 2.5rem)', fontFamily: 'var(--font-heading)', fontWeight: 400, marginBottom: '0.75rem' }}>
           Choose your invitation style
         </h1>
         <p style={{ color: '#888', fontSize: '1rem', maxWidth: '500px', margin: '0 auto' }}>
@@ -90,7 +102,7 @@ export default function Templates() {
       </div>
 
       {/* Filter Tabs */}
-      <div style={{ display: 'flex', justifyContent: 'center', gap: '0.5rem', padding: '0 2rem 2.5rem', flexWrap: 'wrap' }}>
+      <div style={{ display: 'flex', justifyContent: 'center', gap: '0.5rem', padding: '0 1rem 2rem', flexWrap: 'wrap' }}>
         {tags.map(tag => (
           <button key={tag} onClick={() => setFilter(tag)}
             style={{
@@ -106,7 +118,7 @@ export default function Templates() {
       </div>
 
       {/* Template Grid */}
-      <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 2rem 6rem' }}>
+      <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 1rem 7rem' }}>
         <div className="tpl-grid">
           {filtered.map(t => (
             <div key={t.id} className="tpl-card" onClick={() => setSelectedId(t.id)} style={{
@@ -115,7 +127,7 @@ export default function Templates() {
             }}>
               <div className="tpl-img-wrap">
                 {t.popular && <div className="tpl-popular">⭐ POPULAR</div>}
-                <button className="tpl-preview-btn" onClick={(e) => openPreview(e, t)}><PreviewIcon /></button>
+                <button className="tpl-preview-btn" aria-label={`Preview ${t.name}`} onClick={(e) => openPreview(e, t)}><PreviewIcon /></button>
                 <div className="tpl-phone">
                   <div className="tpl-notch"></div>
                   <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', borderRadius: '16px', overflow: 'hidden' }}>
@@ -150,8 +162,7 @@ export default function Templates() {
       </div>
 
       {/* Sticky bottom CTA for selection */}
-      <div style={{
-        position: 'fixed', bottom: '2.5rem', left: '50%', zIndex: 999,
+      <div className="tpl-sticky-cta" style={{
         transform: `translateX(-50%) ${selectedId ? 'translateY(0) scale(1)' : 'translateY(150%) scale(0.9)'}`,
         opacity: selectedId ? 1 : 0,
         transition: 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)',

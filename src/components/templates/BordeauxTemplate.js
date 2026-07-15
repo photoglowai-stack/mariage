@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useCallback, useState, useEffect, useRef } from 'react';
 import Hls from 'hls.js';
 import ScratchReveal from '../ScratchReveal';
 import FlipCountdown from '../FlipCountdown';
@@ -13,6 +13,14 @@ function useScrollAnimation() {
   const ref = useRef(null);
 
   useEffect(() => {
+    const element = ref.current;
+    if (!element) return undefined;
+
+    if (!('IntersectionObserver' in window)) {
+      const frame = window.requestAnimationFrame(() => setIsVisible(true));
+      return () => window.cancelAnimationFrame(frame);
+    }
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -20,14 +28,10 @@ function useScrollAnimation() {
           observer.unobserve(entry.target);
         }
       },
-      { threshold: 0.1 }
+      { rootMargin: '0px 0px 12% 0px', threshold: 0.06 }
     );
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
-    return () => {
-      if (ref.current) observer.unobserve(ref.current);
-    };
+    observer.observe(element);
+    return () => observer.disconnect();
   }, []);
 
   return [ref, isVisible];
@@ -46,9 +50,10 @@ const AnimatedSection = ({ children, className = '', type = 'fade', style = {} }
 // 3D Coverflow Gallery Component
 const GalleryCoverflow = ({ images }) => {
   const trackRef = useRef(null);
+  const animationFrameRef = useRef(null);
   const [stylesList, setStylesList] = useState([]);
 
-  const handleScroll = () => {
+  const updateStyles = useCallback(() => {
     if (!trackRef.current) return;
     const track = trackRef.current;
     const trackCenter = track.scrollLeft + track.clientWidth / 2;
@@ -72,13 +77,24 @@ const GalleryCoverflow = ({ images }) => {
       };
     });
     setStylesList(newStyles);
-  };
+    animationFrameRef.current = null;
+  }, []);
+
+  const handleScroll = useCallback(() => {
+    if (animationFrameRef.current !== null) return;
+    animationFrameRef.current = window.requestAnimationFrame(updateStyles);
+  }, [updateStyles]);
 
   useEffect(() => {
     handleScroll();
     window.addEventListener('resize', handleScroll);
-    return () => window.removeEventListener('resize', handleScroll);
-  }, [images]);
+    return () => {
+      window.removeEventListener('resize', handleScroll);
+      if (animationFrameRef.current !== null) {
+        window.cancelAnimationFrame(animationFrameRef.current);
+      }
+    };
+  }, [handleScroll, images]);
 
   return (
     <div 
@@ -295,19 +311,22 @@ const themes = {
   }
 };
 
-export default function BordeauxTemplate({ data, editMode = false, autoPlaySimulation = false, onEnvelopeDismissed, heroHeight = '100vh' }) {
+export default function BordeauxTemplate({ data, editMode = false, autoPlaySimulation = false, onEnvelopeDismissed, heroHeight }) {
   const [isMuted, setIsMuted] = useState(true);
   const [accompaniedStatus, setAccompaniedStatus] = useState("");
   
   // Envelope State
   const [envelopeOpen, setEnvelopeOpen] = useState(false);
   const [envelopeDismissed, setEnvelopeDismissed] = useState(false);
+  const [envelopeReady, setEnvelopeReady] = useState(false);
   const envelopeVideoRef = useRef(null);
 
   useEffect(() => {
     // Setup HLS for the envelope video
     const video = envelopeVideoRef.current;
     if (!video) return;
+
+    setEnvelopeReady(false);
 
     const src = data?.videos?.envelope || "https://customer-u86xbpugorqyu327.cloudflarestream.com/dd56b19a36d2302d980bcafece0a9b05/manifest/video.m3u8";
 
@@ -429,11 +448,11 @@ export default function BordeauxTemplate({ data, editMode = false, autoPlaySimul
       <div className={styles.container} style={{ backgroundColor: theme.bgColor }}>
         
         {/* ================= HERO SECTION ================= */}
-        <section className={styles.hero} style={{ height: heroHeight, minHeight: heroHeight }}>
+        <section className={styles.hero} style={heroHeight ? { '--hero-height': heroHeight } : undefined}>
           {/* ================= ENVELOPE OVERLAY ================= */}
           {!editMode && !envelopeDismissed && (
             <div 
-              className={`${styles.envelopeOverlay} ${envelopeOpen ? styles.opening : ''} ${envelopeDismissed ? styles.dismissed : ''}`} 
+              className={`${styles.envelopeOverlay} ${envelopeReady ? styles.envelopeReady : ''} ${envelopeOpen ? styles.opening : ''} ${envelopeDismissed ? styles.dismissed : ''}`}
               onClick={handleEnvelopeClick}
             >
               <video 
@@ -441,6 +460,8 @@ export default function BordeauxTemplate({ data, editMode = false, autoPlaySimul
                 className={styles.envelopeVideo}
                 muted
                 playsInline
+                onCanPlay={() => setEnvelopeReady(true)}
+                onError={() => setEnvelopeDismissed(true)}
                 onEnded={handleVideoEnded}
               />
             </div>

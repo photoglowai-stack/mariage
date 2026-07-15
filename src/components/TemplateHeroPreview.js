@@ -1,12 +1,38 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from 'react';
-import Hls from 'hls.js';
+import React, { useEffect, useRef, useState } from 'react';
 
 export default function TemplateHeroPreview({ partner1 = "Emma", partner2 = "Liam", videoSrc, envelopeSrc, showEnvelope = false, isImage = false }) {
   const [envelopeDismissed, setEnvelopeDismissed] = useState(!showEnvelope);
   const [envelopeOpen, setEnvelopeOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const [videoFailed, setVideoFailed] = useState(false);
+  const previewRef = useRef(null);
+  const heroVideoRef = useRef(null);
   const envelopeVideoRef = useRef(null);
+
+  useEffect(() => {
+    const preview = previewRef.current;
+    if (!preview) return undefined;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsVisible(entry.isIntersecting),
+      { rootMargin: '240px 0px' }
+    );
+    observer.observe(preview);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const video = heroVideoRef.current;
+    if (!video || isImage) return;
+
+    if (isVisible) {
+      video.play().catch(() => {});
+    } else {
+      video.pause();
+    }
+  }, [isVisible, isImage]);
 
   useEffect(() => {
     if (showEnvelope && envelopeSrc && !envelopeDismissed) {
@@ -14,13 +40,24 @@ export default function TemplateHeroPreview({ partner1 = "Emma", partner2 = "Lia
       if (!video) return;
 
       let hls;
-      if (envelopeSrc.endsWith('.m3u8') && Hls.isSupported()) {
-        hls = new Hls({ startLevel: -1, capLevelToPlayerSize: true });
-        hls.loadSource(envelopeSrc);
-        hls.attachMedia(video);
-      } else {
-        video.src = envelopeSrc;
-      }
+      let cancelled = false;
+      const loadEnvelope = async () => {
+        if (envelopeSrc.endsWith('.m3u8')) {
+          const { default: Hls } = await import('hls.js');
+          if (cancelled) return;
+          if (Hls.isSupported()) {
+            hls = new Hls({ startLevel: -1, capLevelToPlayerSize: true });
+            hls.loadSource(envelopeSrc);
+            hls.attachMedia(video);
+          } else {
+            video.src = envelopeSrc;
+          }
+        } else {
+          video.src = envelopeSrc;
+        }
+      };
+
+      loadEnvelope();
 
       const timer = setTimeout(() => {
         setEnvelopeOpen(true);
@@ -28,6 +65,7 @@ export default function TemplateHeroPreview({ partner1 = "Emma", partner2 = "Lia
       }, 1000);
       
       return () => {
+        cancelled = true;
         clearTimeout(timer);
         if (hls) hls.destroy();
       };
@@ -39,7 +77,7 @@ export default function TemplateHeroPreview({ partner1 = "Emma", partner2 = "Lia
   };
 
   return (
-    <div style={{ position: 'relative', width: '100%', height: '100%', overflow: 'hidden', backgroundColor: '#111', containerType: 'inline-size' }}>
+    <div ref={previewRef} style={{ position: 'relative', width: '100%', height: '100%', overflow: 'hidden', backgroundColor: '#111', containerType: 'inline-size' }}>
       {/* ENVELOPE OVERLAY */}
       {!envelopeDismissed && envelopeSrc && (
         <div style={{
@@ -63,8 +101,19 @@ export default function TemplateHeroPreview({ partner1 = "Emma", partner2 = "Lia
       {isImage ? (
         <img src={videoSrc} alt="Preview" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
       ) : (
-        <video src={videoSrc} autoPlay loop={videoSrc !== envelopeSrc} muted playsInline style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+        <video
+          ref={heroVideoRef}
+          src={isVisible ? videoSrc : undefined}
+          autoPlay={isVisible}
+          loop={videoSrc !== envelopeSrc}
+          muted
+          playsInline
+          preload="metadata"
+          onError={() => setVideoFailed(true)}
+          style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: videoFailed ? 0 : 1, transition: 'opacity 250ms ease' }}
+        />
       )}
+      {videoFailed && <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(135deg, #7d5b5d, #211c1d)' }} />}
       <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0,0,0,0.2)' }} />
       
       <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', color: '#fff', textAlign: 'center', paddingTop: '3em', fontSize: '3.8cqw' }}>
