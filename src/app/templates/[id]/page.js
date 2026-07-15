@@ -45,7 +45,6 @@ export default function TemplateDetailPage({ params }) {
       {/* Main Template Content rendering full screen */}
       <BordeauxTemplate 
         editMode={false}
-        heroHeight="100vh"
         data={{
           themeId: tpl.id,
           partner1: tpl.partner1,
