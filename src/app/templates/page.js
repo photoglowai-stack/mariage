@@ -50,18 +50,22 @@ export default function Templates() {
     <div style={{ backgroundColor: '#faf8f5', minHeight: '100vh', fontFamily: 'var(--font-body)', color: '#1a1a1a' }}>
       <style>{`
         .tpl-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem; }
-        .tpl-card { min-width: 0; border-radius: 8px; overflow: hidden; background: #fff; border: 1px solid rgba(0,0,0,0.05); box-shadow: 0 2px 12px rgba(0,0,0,0.03); transition: transform 0.25s, box-shadow 0.25s; cursor: pointer; }
-        .tpl-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.08); }
+        .tpl-card { min-width: 0; border-radius: 8px; overflow: hidden; background: #fff; border: 1px solid rgba(0,0,0,0.05); box-shadow: 0 2px 12px rgba(0,0,0,0.03); transition: transform 260ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 260ms ease, border-color 180ms ease; cursor: pointer; will-change: transform; }
+        @media (hover: hover) { .tpl-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.08); } }
+        .tpl-card:active { transform: translateY(-1px) scale(0.995); }
         .tpl-img-wrap { position: relative; aspect-ratio: 3/4; overflow: hidden; background: #f0ede9; }
         .tpl-phone { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: min(55%, 190px); height: 75%; border-radius: 20px; overflow: hidden; box-shadow: 0 8px 30px rgba(0,0,0,0.15); border: 3px solid #222; background: #111; }
         .tpl-info { padding: 1.25rem 1.5rem; }
         .tpl-actions { display: flex; gap: 0; border-top: 1px solid #f0ede9; }
-        .tpl-actions button { flex: 1; padding: 0.75rem; border: none; background: none; cursor: pointer; font-size: 0.85rem; font-weight: 500; font-family: inherit; color: #555; display: flex; align-items: center; justify-content: center; gap: 0.4rem; transition: background 0.15s; }
+        .tpl-actions button { flex: 1; min-height: 44px; padding: 0.75rem; border: none; background: none; cursor: pointer; font-size: 0.85rem; font-weight: 500; font-family: inherit; color: #555; display: flex; align-items: center; justify-content: center; gap: 0.4rem; transition: background-color 160ms ease, color 160ms ease, transform 160ms ease; }
         .tpl-actions button:hover { background: #faf8f5; }
+        .tpl-actions button:active { transform: scale(0.97); }
         .tpl-actions button:first-child { border-right: 1px solid #f0ede9; }
         .tpl-badge { display: inline-block; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.5px; padding: 0.15rem 0.5rem; border-radius: 4px; background: rgba(176,137,104,0.12); color: #b08968; margin-left: 0.5rem; vertical-align: middle; }
         .tpl-popular { position: absolute; top: 12px; right: 12px; background: #b08968; color: #fff; font-size: 0.65rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: 6px; z-index: 2; letter-spacing: 0.5px; }
-        .tpl-preview-btn { position: absolute; top: 12px; right: 12px; width: 32px; height: 32px; border-radius: 50%; background: rgba(255,255,255,0.85); backdrop-filter: blur(4px); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; z-index: 2; }
+        .tpl-preview-btn { position: absolute; top: 12px; right: 12px; width: 32px; height: 32px; border-radius: 50%; background: rgba(255,255,255,0.85); backdrop-filter: blur(4px); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; z-index: 2; transition: transform 180ms cubic-bezier(0.16, 1, 0.3, 1), background-color 180ms ease; }
+        @media (hover: hover) { .tpl-preview-btn:hover { transform: scale(1.08); background: #fff; } }
+        .tpl-preview-btn:active { transform: scale(0.92); }
         @media (max-width: 900px) { .tpl-grid { grid-template-columns: repeat(2, 1fr); gap: 1.25rem; } }
         .tpl-sticky-cta { position: fixed; bottom: max(1rem, env(safe-area-inset-bottom)); left: 50%; z-index: 999; }
         @media (max-width: 550px) {

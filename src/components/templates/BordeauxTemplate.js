@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useCallback, useState, useEffect, useRef } from 'react';
-import Hls from 'hls.js';
 import ScratchReveal from '../ScratchReveal';
 import FlipCountdown from '../FlipCountdown';
 import ShakeConfetti from '../ShakeConfetti';
@@ -51,14 +50,13 @@ const AnimatedSection = ({ children, className = '', type = 'fade', style = {} }
 const GalleryCoverflow = ({ images }) => {
   const trackRef = useRef(null);
   const animationFrameRef = useRef(null);
-  const [stylesList, setStylesList] = useState([]);
 
   const updateStyles = useCallback(() => {
     if (!trackRef.current) return;
     const track = trackRef.current;
     const trackCenter = track.scrollLeft + track.clientWidth / 2;
     
-    const newStyles = Array.from(track.children).map(child => {
+    Array.from(track.children).forEach(child => {
       const childCenter = child.offsetLeft + child.clientWidth / 2;
       const distance = Math.abs(trackCenter - childCenter);
       const maxDist = track.clientWidth / 1.5;
@@ -69,14 +67,10 @@ const GalleryCoverflow = ({ images }) => {
       const rotateY = ((childCenter - trackCenter) / maxDist) * -30;
       const zIndex = Math.round(ratio * 100);
       
-      return {
-        transform: `perspective(1200px) scale(${scale}) rotateY(${rotateY}deg)`,
-        opacity,
-        zIndex,
-        /* Removing transition for raw 60fps tracking */
-      };
+      child.style.transform = `perspective(1200px) scale(${scale}) rotateY(${rotateY}deg)`;
+      child.style.opacity = opacity;
+      child.style.zIndex = zIndex;
     });
-    setStylesList(newStyles);
     animationFrameRef.current = null;
   }, []);
 
@@ -104,7 +98,7 @@ const GalleryCoverflow = ({ images }) => {
       style={{ perspective: '1200px' }}
     >
       {images.map((img, i) => (
-        <div key={i} className={styles.galleryItem} style={stylesList[i] || {}}>
+        <div key={i} className={styles.galleryItem}>
           <img src={img} alt={`Memory ${i}`} />
         </div>
       ))}
@@ -319,7 +313,23 @@ export default function BordeauxTemplate({ data, editMode = false, autoPlaySimul
   const [envelopeOpen, setEnvelopeOpen] = useState(false);
   const [envelopeDismissed, setEnvelopeDismissed] = useState(false);
   const [envelopeReady, setEnvelopeReady] = useState(false);
+  const [envelopeFailed, setEnvelopeFailed] = useState(false);
   const envelopeVideoRef = useRef(null);
+
+  const handleVideoEnded = useCallback(() => {
+    setEnvelopeDismissed(true);
+    onEnvelopeDismissed?.();
+  }, [onEnvelopeDismissed]);
+
+  const startEnvelope = useCallback(() => {
+    if (envelopeOpen || !envelopeReady) return;
+
+    setEnvelopeOpen(true);
+    const video = envelopeVideoRef.current;
+    if (!video) return;
+    video.currentTime = 0;
+    video.play().catch(() => setEnvelopeFailed(true));
+  }, [envelopeOpen, envelopeReady]);
 
   useEffect(() => {
     // Setup HLS for the envelope video
@@ -327,35 +337,54 @@ export default function BordeauxTemplate({ data, editMode = false, autoPlaySimul
     if (!video) return;
 
     setEnvelopeReady(false);
+    setEnvelopeFailed(false);
+    setEnvelopeOpen(false);
+    setEnvelopeDismissed(false);
 
     const src = data?.videos?.envelope || "https://customer-u86xbpugorqyu327.cloudflarestream.com/dd56b19a36d2302d980bcafece0a9b05/manifest/video.m3u8";
+    let cancelled = false;
+    let hls;
 
-    if (src.endsWith('.m3u8') && Hls.isSupported()) {
-      const hls = new Hls({
-        startLevel: -1, // Use auto quality
-        capLevelToPlayerSize: true
-      });
-      hls.loadSource(src);
-      hls.attachMedia(video);
-      return () => hls.destroy();
-    } else {
-      // Fallback for Safari which natively supports HLS, or direct mp4/webm links
+    const loadEnvelope = async () => {
+      if (src.endsWith('.m3u8')) {
+        const { default: Hls } = await import('hls.js');
+        if (cancelled) return;
+        if (Hls.isSupported()) {
+          hls = new Hls({ startLevel: -1, capLevelToPlayerSize: true });
+          hls.on(Hls.Events.ERROR, (_event, detail) => {
+            if (detail.fatal) setEnvelopeFailed(true);
+          });
+          hls.loadSource(src);
+          hls.attachMedia(video);
+          return;
+        }
+      }
+
       video.src = src;
-    }
+      video.load();
+    };
+
+    loadEnvelope().catch(() => setEnvelopeFailed(true));
+    return () => {
+      cancelled = true;
+      hls?.destroy();
+    };
   }, [data?.videos?.envelope]);
 
   useEffect(() => {
-    if (autoPlaySimulation && envelopeReady) {
-      const timer = setTimeout(() => {
-        if (envelopeOpen) return;
-        setEnvelopeOpen(true);
-        if (envelopeVideoRef.current) {
-          envelopeVideoRef.current.play().catch(e => console.log("Video play failed", e));
-        }
-      }, 500);
+    if (editMode || envelopeReady || envelopeFailed || envelopeDismissed) return undefined;
+
+    const timer = window.setTimeout(() => setEnvelopeFailed(true), 8000);
+    return () => window.clearTimeout(timer);
+  }, [editMode, envelopeDismissed, envelopeFailed, envelopeReady]);
+
+  useEffect(() => {
+    if ((!editMode || autoPlaySimulation) && envelopeReady && !envelopeOpen) {
+      const timer = window.setTimeout(startEnvelope, 350);
       return () => clearTimeout(timer);
     }
-  }, [autoPlaySimulation, envelopeOpen, envelopeReady]);
+    return undefined;
+  }, [autoPlaySimulation, editMode, envelopeOpen, envelopeReady, startEnvelope]);
 
   // Valeurs par défaut si `data` est vide
   const t = data || {};
@@ -428,17 +457,11 @@ export default function BordeauxTemplate({ data, editMode = false, autoPlaySimul
   );
 
   const handleEnvelopeClick = () => {
-    if (envelopeOpen || !envelopeReady) return; // Prevent double clicks before the opening video is ready
-    
-    setEnvelopeOpen(true);
-    if (envelopeVideoRef.current) {
-      envelopeVideoRef.current.play().catch(e => console.log("Video play failed", e));
+    if (envelopeFailed) {
+      handleVideoEnded();
+      return;
     }
-  };
-
-  const handleVideoEnded = () => {
-    setEnvelopeDismissed(true);
-    if (onEnvelopeDismissed) onEnvelopeDismissed();
+    startEnvelope();
   };
 
   return (
@@ -454,17 +477,25 @@ export default function BordeauxTemplate({ data, editMode = false, autoPlaySimul
             <div 
               className={`${styles.envelopeOverlay} ${envelopeReady ? styles.envelopeReady : ''} ${envelopeOpen ? styles.opening : ''} ${envelopeDismissed ? styles.dismissed : ''}`}
               onClick={handleEnvelopeClick}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(event) => {
+                if (event.key === 'Enter' || event.key === ' ') handleEnvelopeClick();
+              }}
             >
               <video 
                 ref={envelopeVideoRef}
                 className={styles.envelopeVideo}
                 muted
                 playsInline
-                onCanPlay={() => setEnvelopeReady(true)}
-                onError={() => setEnvelopeDismissed(true)}
+                preload="auto"
+                onLoadedData={() => setEnvelopeReady(true)}
+                onError={() => setEnvelopeFailed(true)}
                 onEnded={handleVideoEnded}
               />
-              {!envelopeReady && <span className={styles.envelopeText}>Your invitation is arriving</span>}
+              <span className={styles.envelopeText}>
+                {envelopeFailed ? 'Enter invitation' : envelopeReady && !envelopeOpen ? 'Opening invitation' : 'Your invitation is arriving'}
+              </span>
             </div>
           )}
 

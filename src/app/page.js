@@ -38,6 +38,7 @@ const faqs = [
 export default function Home() {
   const carouselRef = useRef(null);
   const heroMockupRef = useRef(null);
+  const scrollFrameRef = useRef(null);
   const [showCta, setShowCta] = useState(false);
 
   const handleSimulationScroll = () => {
@@ -50,10 +51,21 @@ export default function Home() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setShowCta(window.scrollY > 500);
+      if (scrollFrameRef.current !== null) return;
+
+      scrollFrameRef.current = window.requestAnimationFrame(() => {
+        setShowCta(window.scrollY > 500);
+        scrollFrameRef.current = null;
+      });
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (scrollFrameRef.current !== null) {
+        window.cancelAnimationFrame(scrollFrameRef.current);
+      }
+    };
   }, []);
 
   const scrollCarousel = (direction) => {

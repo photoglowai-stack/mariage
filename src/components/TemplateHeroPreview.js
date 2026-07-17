@@ -1,16 +1,23 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 export default function TemplateHeroPreview({ partner1 = "Emma", partner2 = "Liam", videoSrc, envelopeSrc, showEnvelope = false, isImage = false }) {
   const [envelopeDismissed, setEnvelopeDismissed] = useState(!showEnvelope);
   const [envelopeOpen, setEnvelopeOpen] = useState(false);
   const [envelopeReady, setEnvelopeReady] = useState(false);
+  const [envelopeFailed, setEnvelopeFailed] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [videoFailed, setVideoFailed] = useState(false);
   const previewRef = useRef(null);
   const heroVideoRef = useRef(null);
   const envelopeVideoRef = useRef(null);
+
+  const handleEnvelopeError = useCallback(() => {
+    setEnvelopeFailed(true);
+    // A broken preview should never hide the template beneath it.
+    setTimeout(() => setEnvelopeDismissed(true), 700);
+  }, []);
 
   useEffect(() => {
     const preview = previewRef.current;
@@ -42,6 +49,7 @@ export default function TemplateHeroPreview({ partner1 = "Emma", partner2 = "Lia
 
       setEnvelopeReady(false);
       setEnvelopeOpen(false);
+      setEnvelopeFailed(false);
       let hls;
       let cancelled = false;
       const loadEnvelope = async () => {
@@ -50,13 +58,18 @@ export default function TemplateHeroPreview({ partner1 = "Emma", partner2 = "Lia
           if (cancelled) return;
           if (Hls.isSupported()) {
             hls = new Hls({ startLevel: -1, capLevelToPlayerSize: true });
+            hls.on(Hls.Events.ERROR, (_event, data) => {
+              if (data.fatal) handleEnvelopeError();
+            });
             hls.loadSource(envelopeSrc);
             hls.attachMedia(video);
           } else {
             video.src = envelopeSrc;
+            video.load();
           }
         } else {
           video.src = envelopeSrc;
+          video.load();
         }
       };
 
@@ -67,7 +80,7 @@ export default function TemplateHeroPreview({ partner1 = "Emma", partner2 = "Lia
         if (hls) hls.destroy();
       };
     }
-  }, [isVisible, showEnvelope, envelopeSrc, envelopeDismissed]);
+  }, [isVisible, showEnvelope, envelopeSrc, envelopeDismissed, handleEnvelopeError]);
 
   useEffect(() => {
     if (!isVisible || !showEnvelope || !envelopeSrc || !envelopeReady || envelopeDismissed) return undefined;
@@ -75,7 +88,7 @@ export default function TemplateHeroPreview({ partner1 = "Emma", partner2 = "Lia
     const timer = setTimeout(() => {
       setEnvelopeOpen(true);
       envelopeVideoRef.current?.play().catch(() => {});
-    }, 600);
+    }, 250);
 
     return () => clearTimeout(timer);
   }, [isVisible, showEnvelope, envelopeSrc, envelopeReady, envelopeDismissed]);
@@ -96,7 +109,7 @@ export default function TemplateHeroPreview({ partner1 = "Emma", partner2 = "Lia
           opacity: envelopeDismissed ? 0 : 1,
           visibility: envelopeDismissed ? 'hidden' : 'visible'
         }}>
-          {!envelopeOpen && (
+          {!envelopeOpen && !envelopeFailed && (
             <span style={{ position: 'relative', zIndex: 1, color: '#6b363e', fontFamily: 'var(--font-heading, serif)', fontSize: '0.9em', letterSpacing: '0.12em', textTransform: 'uppercase' }}>
               Opening invitation
             </span>
@@ -105,9 +118,10 @@ export default function TemplateHeroPreview({ partner1 = "Emma", partner2 = "Lia
             ref={envelopeVideoRef}
             muted
             playsInline
-            onCanPlay={() => setEnvelopeReady(true)}
+            onLoadedData={() => setEnvelopeReady(true)}
             onEnded={handleVideoEnded}
-            onError={() => setEnvelopeDismissed(true)}
+            onError={handleEnvelopeError}
+            preload="metadata"
             style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: envelopeReady ? 1 : 0, transition: 'opacity 250ms ease' }}
           />
         </div>

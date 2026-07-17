@@ -82,6 +82,12 @@
   padding: 1rem 2rem;
   border-radius: 4px;
   backdrop-filter: blur(4px);
+  pointer-events: none;
+  transition: opacity 180ms ease;
+}
+
+.envelopeOverlay.opening .envelopeText {
+  opacity: 0;
 }
 
 @keyframes pulse {
